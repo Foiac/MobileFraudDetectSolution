@@ -1,0 +1,8 @@
+Ambiente virtual para Python
+
+1 - Abrir VScode
+2 - Criar uma pasta em um diretório da sua escolha
+3 - Abrir o terminal PowerShell e digitar o comando "Python -m venv env"
+4 - Matar terminal PowerShell no VScode e iniciar no Windows como adm e digitar o comando "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy" após confirmar enviando um "S"
+5 - Abrir terminal PowerShell no VScode e digitar comando ".\env\Scripts\Activate.ps1"
+6 - Para sair do ambiente virtual basta digitar o comando "deactivate"
