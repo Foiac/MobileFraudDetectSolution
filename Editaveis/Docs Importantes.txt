@@ -1,3 +1,4 @@
 Docs Importantes:
 
 Fast API: https://fastapi.tiangolo.com/tutorial/first-steps/#check-it
+pools de nós cluster AKS: https://learn.microsoft.com/pt-br/azure/aks/create-node-pools
