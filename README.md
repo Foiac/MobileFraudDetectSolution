@@ -15,7 +15,7 @@ git clone https://github.com/Foiac/MobileFraudDetectSolution.git
 # Open path MobileFraudDetectSolution/Infraestrutura
 cd MobileFraudDetectSolution/Infraestrutura
 # Give permission to execute .sh
-chmod +X script.sh
+chmod +x script.sh
 # Run script.sh
 ./script.sh
 ```
