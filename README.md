@@ -1,7 +1,7 @@
 # MobileFraudDetectSolution
-Case Data Master 2024
+## Case Data Master 2024
 
-#### Provivionando Ifraestrutura
+#### Provisionando a infraestrutura
 
 1 - Abrir terminal Bash da Azure e Clonar o repositório executando o comando a seguir
 
