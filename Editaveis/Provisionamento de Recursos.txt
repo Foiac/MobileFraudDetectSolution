@@ -97,4 +97,4 @@ Nome da tarefa: fraudFastLoad
 
 ---> Apagar Grupo de Recursos:
 
-az group delete --name $rgName
+az group delete --name rgfraud
