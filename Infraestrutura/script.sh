@@ -12,7 +12,7 @@ assigneeId="kaio_cfs_hotmail.com#EXT#@kaiocfshotmail.onmicrosoft.com"
 secretName="ehcssecret"
 storageAcName="stacfraud"
 containerName="contfraud"
-workspaceName = "wksdtbsfraud"
+workspaceName="wksdtbsfraud"
 
 # Create Resouce Group 
 az group create --name $rgName --location $region
