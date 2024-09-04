@@ -29,15 +29,15 @@ az eventhubs namespace authorization-rule create --resource-group $rgName --name
 az keyvault create --name $kvName --resource-group $rgName --location $region
 az role assignment create --assignee $assigneeId --role "Key Vault Administrator" --scope /subscriptions/$subsId/resourceGroups/$rgName/providers/Microsoft.KeyVault/vaults/$kvName
 
-# Storage Connection String on Key Vault
-connectionString=$(az eventhubs namespace authorization-rule keys list --resource-group $rgName --namespace-name $namespaceName --name $policieName --query primaryConnectionString --output tsv)
-az keyvault secret set --vault-name $kvName --name $secretName --value $connectionString
+# # Storage Connection String on Key Vault
+# connectionString=$(az eventhubs namespace authorization-rule keys list --resource-group $rgName --namespace-name $namespaceName --name $policieName --query primaryConnectionString --output tsv)
+# az keyvault secret set --vault-name $kvName --name $secretName --value $connectionString
 
 # Create Storage Account on Azure and create container on ADLS
 az storage account create --name $storageAcName --resource-group $rgName --location $region --sku Standard_LRS --kind StorageV2 --hierarchical-namespace true
 az storage container create --name $containerName --account-name $storageAcName --auth-mode login
 
-# Create Paths to Delta Tables
-az storage fs directory create --account-name $storageAcName --file-system $containerName --name Bronze
-az storage fs directory create --account-name $storageAcName --file-system $containerName --name Silver
-az storage fs directory create --account-name $storageAcName --file-system $containerName --name Gold
+# # Create Paths to Delta Tables
+# az storage fs directory create --account-name $storageAcName --file-system $containerName --name Bronze
+# az storage fs directory create --account-name $storageAcName --file-system $containerName --name Silver
+# az storage fs directory create --account-name $storageAcName --file-system $containerName --name Gold

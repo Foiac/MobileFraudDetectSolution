@@ -9,13 +9,11 @@
 git clone https://github.com/Foiac/MobileFraudDetectSolution.git
 ```
 
-2 - Navegar até o diretório MobileFraudDetectSolution/Infraestrutura, dar permissão e executar o arquivo script.sh
+2 - Dar permissão e executar o arquivo script.sh no diretório MobileFraudDetectSolution/Infraestrutura
 
 ```bash
-# Open path MobileFraudDetectSolution/Infraestrutura
-cd MobileFraudDetectSolution/Infraestrutura
 # Give permission to execute .sh
-chmod +x script.sh
+chmod +x MobileFraudDetectSolution/Infraestrutura/script.sh
 # Run script.sh
-./script.sh
+MobileFraudDetectSolution/Infraestrutura/script.sh
 ```
