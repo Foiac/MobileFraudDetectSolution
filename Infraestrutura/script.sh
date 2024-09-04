@@ -44,4 +44,5 @@ az storage fs directory create --account-name $storageAcName --file-system $cont
 az storage fs directory create --account-name $storageAcName --file-system $containerName --name Gold
 
 # Create databricks workspace
-az databricks workspace create --resource-group $rgName --name $workspaceName --location $region --sku standard --prepare-encryption
+az config set extension.dynamic_install_allow_preview=true
+az databricks workspace create --resource-group $rgName --name $workspaceName --location $region --sku standard
