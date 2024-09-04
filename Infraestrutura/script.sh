@@ -29,8 +29,8 @@ az eventhubs namespace authorization-rule create --resource-group $rgName --name
 az keyvault create --name $kvName --resource-group $rgName --location $region
 az role assignment create --assignee $assigneeId --role "Key Vault Administrator" --scope /subscriptions/$subsId/resourceGroups/$rgName/providers/Microsoft.KeyVault/vaults/$kvName
 
-# # Storage Connection String on Key Vault
-# connectionString=$(az eventhubs namespace authorization-rule keys list --resource-group $rgName --namespace-name $namespaceName --name $policieName --query primaryConnectionString --output tsv)
+# Storage Connection String on Key Vault
+connectionString=$(az eventhubs namespace authorization-rule keys list --resource-group $rgName --namespace-name $namespaceName --name $policieName --query primaryConnectionString --output tsv)
 # az keyvault secret set --vault-name $kvName --name $secretName --value $connectionString
 
 # # Create Storage Account on Azure and create container on ADLS
