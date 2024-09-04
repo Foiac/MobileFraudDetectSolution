@@ -12,6 +12,7 @@ assigneeId="kaio_cfs_hotmail.com#EXT#@kaiocfshotmail.onmicrosoft.com"
 secretName="ehcssecret"
 storageAcName="stacfraud"
 containerName="contfraud"
+workspaceName = "wksdtbsfraud"
 
 # Create Resouce Group 
 az group create --name $rgName --location $region
@@ -37,7 +38,10 @@ az keyvault secret set --vault-name $kvName --name $secretName --value $connecti
 az storage account create --name $storageAcName --resource-group $rgName --location $region --sku Standard_LRS --kind StorageV2 --hierarchical-namespace true
 az storage container create --name $containerName --account-name $storageAcName --auth-mode login
 
-# # Create Paths to Delta Tables
+# Create Paths to Delta Tables
 az storage fs directory create --account-name $storageAcName --file-system $containerName --name Bronze
 az storage fs directory create --account-name $storageAcName --file-system $containerName --name Silver
 az storage fs directory create --account-name $storageAcName --file-system $containerName --name Gold
+
+# Create databricks workspace
+az databricks workspace create --resource-group $rgName --name $workspaceName --location $region --sku standard --prepare-encryption
