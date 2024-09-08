@@ -6,5 +6,10 @@
       "min_workers": 2,
       "max_workers": 8
     },
-    "autotermination_minutes": 10
+    "autotermination_minutes": 10,
+    "spark_env_vars": {
+        "MY_ENV_VAR": "my_value",
+        "API_KEY": "your_api_key_here",
+        "DATABASE_URL": "jdbc://your_database_url"
+    }
   }
