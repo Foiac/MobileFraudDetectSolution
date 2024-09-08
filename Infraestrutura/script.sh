@@ -1,18 +1,18 @@
 # Variables
 
 SUBSCRIPTION_ID="d194704a-1cc1-45e7-8cf5-2b4f7bb9e3c3"
-RESOURCE_GROUP="rgFraud"
+RESOURCE_GROUP="rg-fraud"
 REGION="eastus"
-EVENTHUB_NAMESPACE_NAME="fraudEhNameSpace"
+EVENTHUB_NAMESPACE_NAME="fraud-eh-nameSpace"
 SKU_TYPE="Basic"
-EVENTHUB_NAME="frauddetect"
-POLICIE_NAME="listenerEhPolicie"
-KV_NAME="kvfraud"
+EVENTHUB_NAME="fraud-detect"
+POLICIE_NAME="listener-eh-policie"
+KV_NAME="kv-fraud" # Change this name to replicate this solution
 ASSIGNE_ID="kaio_cfs_hotmail.com#EXT#@kaiocfshotmail.onmicrosoft.com"
-SECRET_NAME="ehcssecret"
-STORAGE_ACCOUNT_NAME="stacfraud"
-CONTAINER_NAME="contfraud"
-WORKSPACE_NAME="wksdtbsfraud"
+SECRET_NAME="eh-cs-secret"
+STORAGE_ACCOUNT_NAME="st-ac-fraud" # Change this name to replicate this solution
+CONTAINER_NAME="cont-fraud" 
+WORKSPACE_NAME="wks-dtbs-fraud"
 
 # Create Resouce Group 
 echo "Create Resorce Group"
@@ -42,7 +42,7 @@ az keyvault secret set --vault-name $KV_NAME --name $SECRET_NAME --value $CONNEC
 
 # Create Storage Account on Azure and create container on ADLS
 echo "Storage Connection String on Key Vault"
-az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP --location $REGION --sku Standard_LRS --kind StorageV2 --hierarchical-namespace true
+az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP --location $REGION --sku Standard_LRS --kind StorageV2 --hns true
 az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME --auth-mode login
 
 # Create Paths to Delta Tables
