@@ -3,7 +3,7 @@
 SUBSCRIPTION_ID="d194704a-1cc1-45e7-8cf5-2b4f7bb9e3c3"
 RESOURCE_GROUP="rg-fraud"
 REGION="westus"
-EVENTHUB_NAMESPACE_NAME="fraud-eh-nameSpace"
+EVENTHUB_NAMESPACE_NAME="fraud-eh-namespace"
 SKU_TYPE="Basic"
 EVENTHUB_NAME="fraud-detect"
 POLICIE_NAME="listener-eh-policie"
