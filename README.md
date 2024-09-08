@@ -1,8 +1,15 @@
 # MobileFraudDetectSolution
 ## Case Data Master 2024
 
-#### Provisionando a infraestrutura
+#### I. Objetivo do Case
 
+#### II. Arquitetura de Solução e Arquitetura Técnica
+
+#### III. Explicação sobre o case desenvolvido
+
+#### IV. Melhorias e Considerações finais
+
+#### Provisionando a infraestrutura
 1 - Abrir terminal Bash da Azure e Clonar o repositório executando o comando a seguir
 
 ```bash
