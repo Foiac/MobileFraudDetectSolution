@@ -2,7 +2,7 @@
 
 SUBSCRIPTION_ID="d194704a-1cc1-45e7-8cf5-2b4f7bb9e3c3"
 RESOURCE_GROUP="rg-fraud"
-REGION="eastus"
+REGION="westus"
 EVENTHUB_NAMESPACE_NAME="fraud-eh-nameSpace"
 SKU_TYPE="Basic"
 EVENTHUB_NAME="fraud-detect"
@@ -10,7 +10,7 @@ POLICIE_NAME="listener-eh-policie"
 KV_NAME="kv-fraud" # Change this name to replicate this solution
 ASSIGNE_ID="kaio_cfs_hotmail.com#EXT#@kaiocfshotmail.onmicrosoft.com"
 SECRET_NAME="eh-cs-secret"
-STORAGE_ACCOUNT_NAME="st-ac-fraud" # Change this name to replicate this solution
+STORAGE_ACCOUNT_NAME="stacmfraud" # Change this name to replicate this solution
 CONTAINER_NAME="cont-fraud" 
 WORKSPACE_NAME="wks-dtbs-fraud"
 
@@ -41,7 +41,7 @@ CONNECTION_STRING=$(az eventhubs namespace authorization-rule keys list --resour
 az keyvault secret set --vault-name $KV_NAME --name $SECRET_NAME --value $CONNECTION_STRING
 
 # Create Storage Account on Azure and create container on ADLS
-echo "Storage Connection String on Key Vault"
+echo "Create Storage Account on Azure and create container on ADLS"
 az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP --location $REGION --sku Standard_LRS --kind StorageV2 --hns true
 az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME --auth-mode login
 
@@ -53,8 +53,7 @@ az storage fs directory create --account-name $STORAGE_ACCOUNT_NAME --file-syste
 
 # Create databricks workspace
 echo "Create databricks workspace"
-az config set extension.dynamic_install_allow_preview=true
-az databricks workspace create --resource-group $RESOURCE_GROUP --name $WORKSPACE_NAME --location $REGION --sku standard
+az databricks workspace create --resource-group $RESOURCE_GROUP --name $WORKSPACE_NAME --location $REGION --sku premium 
 
 # Install databricks CLI
 echo "Install databricks CLI"
