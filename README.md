@@ -1,7 +1,9 @@
-# MobileFraudDetectSolution
+# MobileFraudDetectSolution - Identificando Tentativas de Fraudes em Aplicativos Mobile
 ## Case Data Master 2024
 
 #### I. Objetivo do Case
+
+Este trabalho tem como objetivo implementar um case prático de coleta de logs de acesso a um aplicativo de transações financeiras, onde a arquitetura contém ingestão e transformação e visualização de dados em um data lake na cloud (Azure Data Lake Gen2).
 
 #### II. Arquitetura de Solução e Arquitetura Técnica
 
