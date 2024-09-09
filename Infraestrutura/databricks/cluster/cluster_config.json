@@ -1,0 +1,21 @@
+{
+  "cluster_name": "fraud-cluster",
+  "spark_version": "11.3.x-scala2.12",
+  "node_type_id": "Standard_DS3_v2",
+  "autoscale": {
+    "min_workers": 2,
+    "max_workers": 8
+  },
+  "autotermination_minutes": 30,
+  "environment_vars": {
+    "AZURE_STORAGE_ACCOUNT": "stacmfraud"
+  },
+  "init_scripts": [],
+  "libraries": [
+    {
+      "maven": {
+        "coordinates": "com.microsoft.azure:azure-eventhubs-spark_2.12:2.3.22"
+      }
+    }
+  ]
+}
