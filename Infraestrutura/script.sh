@@ -42,7 +42,7 @@ az keyvault secret set --vault-name $KV_NAME --name $SECRET_NAME --value $CONNEC
 
 # Create Storage Account on Azure and create container on ADLS
 echo "Create Storage Account on Azure and create container on ADLS"
-az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP --location $REGION --sku Standard_LRS --kind StorageV2 --hns true
+az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP --location $REGION --sku Standard_LRS --kind StorageV2 --enable-hierarchical-namespace true --default-action Allow
 az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME --auth-mode login
 
 # Create Paths to Delta Tables
