@@ -98,3 +98,7 @@ Nome da tarefa: fraudFastLoad
 ---> Apagar Grupo de Recursos:
 
 az group delete --name rgfraud
+
+
+
+com.microsoft.azure:azure-eventhubs-spark_2.12:2.3.22
