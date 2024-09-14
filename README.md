@@ -21,8 +21,13 @@ git clone https://github.com/Foiac/MobileFraudDetectSolution.git
 2 - Dar permissão e executar o arquivo script.sh no diretório MobileFraudDetectSolution/Infraestrutura
 
 ```bash
-# Give permission to execute .sh
+# Give permission to execute .sh and run script.sh to create resource group and resources
 chmod +x MobileFraudDetectSolution/Infraestrutura/script.sh
-# Run script.sh
 MobileFraudDetectSolution/Infraestrutura/script.sh
+```
+
+```bash
+# Give permission to execute .sh # Run dbscript.sh to create databricks databricks cluster
+chmod +x MobileFraudDetectSolution/Infraestrutura/databricks/cluster/dbscript.sh
+MobileFraudDetectSolution/Infraestrutura/databricks/cluster/dbscript.sh
 ```
