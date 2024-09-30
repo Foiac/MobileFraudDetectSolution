@@ -32,7 +32,8 @@ az eventhubs namespace authorization-rule create --resource-group $RESOURCE_GROU
 
 # Create Azure Key Vault
 echo "Create Azure Key Vault: " $KV_NAME
-az keyvault create --name $KV_NAME --resource-group $RESOURCE_GROUP --location $REGION
+#az keyvault create --name $KV_NAME --resource-group $RESOURCE_GROUP --location $REGION
+az keyvault recover --name $KV_NAME
 az role assignment create --assignee $ASSIGNE_ID --role "Key Vault Administrator" --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$KV_NAME
 
 # Storage Connection String on Key Vault
