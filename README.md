@@ -21,7 +21,7 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 
 #### II. Arquitetura de Solução e Arquitetura Técnica
 
-![Arquitetura de funcoinamento](editaveis/mobile-fraud-detect-V1.jpeg)
+![Arquitetura de funcionamento](Editaveis/mobile-fraud-detect-V1.jpeg)
 
 - Driver: 1xStandard_D8_v3 -> Robusto o suficiente para coordenar execução de tarefas e comunicar com os nós já que tem um bom poder de processamento e memória (8 vCPUs, 32 GB de RAM)
 - Workder: 2xStandard_E8ds_v4 -> Bom equilíbrio entre CPU, memória e I/O de disco, o que a torna uma escolha ideal para pipelines de processamento leve, como no seu caso de uso. Manter 2 workers ativos é uma boa prática para garantir que o cluster esteja disponível para pequenas variações de carga e garantir que o Spark Streaming possa continuar lendo e processando os dados mesmo em momentos de baixa demanda (8 vCPUs, 64 GB de RAM)
