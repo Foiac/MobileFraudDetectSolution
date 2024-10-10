@@ -1,6 +1,6 @@
 # Variables
 
-SUBSCRIPTION_ID="d194704a-1cc1-45e7-8cf5-2b4f7bb9e3c3"
+SUBSCRIPTION_ID="14123559-deac-49b3-a06f-7e2c00e90336"
 RESOURCE_GROUP="rg-fraud"
 REGION="westus"
 EVENTHUB_NAMESPACE_NAME="fraud-eh-namespace"
@@ -8,7 +8,7 @@ SKU_TYPE="Basic"
 EVENTHUB_NAME="fraud-detect"
 POLICIE_NAME="listener-eh-policie"
 KV_NAME="kv-fraud" # Change this name to replicate this solution
-ASSIGNE_ID="kaio_cfs_hotmail.com#EXT#@kaiocfshotmail.onmicrosoft.com"
+ASSIGNE_ID="brendasclauser_hotmail.com#EXT#@brendasclauserhotmail.onmicrosoft.com"
 SECRET_NAME="eh-cs-secret"
 STORAGE_ACCOUNT_NAME="stacmfraud" # Change this name to replicate this solution
 CONTAINER_NAME="cont-fraud" 

@@ -1,0 +1,8 @@
+fs.azure.account.oauth2.client.secret {{secrets/dbwsscope/spn-secret}}
+fs.azure.account.auth.type OAuth
+fs.azure.account.oauth2.client.endpoint https://login.microsoftonline.com/dc25df03-ffa5-4111-b188-46fe6cd26a3a/oauth2/token
+fs.azure.account.oauth.provider.type org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider
+fs.azure.account.oauth2.client.id 775d1965-2ada-4399-adb9-ead9caaf4d72
+spark.hadoop.fs.azure.account.key.stacmfraud.dfs.core.windows.net {{secrets/dbwsscope/adls-secrett}}
+
+

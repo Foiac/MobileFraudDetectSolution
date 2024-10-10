@@ -10,6 +10,9 @@
   "environment_vars": {
     "AZURE_STORAGE_ACCOUNT": "stacmfraud"
   },
+  "spark_conf": {
+        "fs.azure.account.key.stacmfraud.blob.core.windows.net": "{{secrets/dbwsscope/adls-secret}}"
+    },
   "init_scripts": [],
   "libraries": [
     {

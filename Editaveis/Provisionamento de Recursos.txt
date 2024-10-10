@@ -1,31 +1,3 @@
-Comando CLI AZURE:
-
-
-Encontrar assinatura atual: az account set --subscription "d194704a-1cc1-45e7-8cf5-2b4f7bb9e3c3"
-
-
----> Criar Grupo de Recursos:
-
-subsId="d194704a-1cc1-45e7-8cf5-2b4f7bb9e3c3"
-rgName="rgfraud"
-region="eastus"
-az group create --name $rgName --location $region
-
----> Provisionar Event Hub Namespace:
-
-namespaceName="fraudEhNameSpace"
-skuType="Basic"
-az eventhubs namespace create --name $namespaceName --resource-group $rgName --sku $skuType -l $region
-
----> Provisionar Tópico:
-
-eventhubName="frauddetect"
-az eventhubs eventhub create --resource-group $rgName --namespace-name $namespaceName --name $eventhubName --cleanup-policy Delete --partition-count 1
-
----> Criar Shared access policies para o eventhub
-
-policieName="listenerEhPolicie"
-az eventhubs namespace authorization-rule create --resource-group $rgName --namespace-name $namespaceName --name $policieName --rights Listen
 
 ---> Provisionar Azure Key Vault
 
@@ -77,6 +49,8 @@ az storage fs directory create --account-name $storageAcName --file-system $cont
 az storage account keys list --resource-group $rgName --account-name $storageAcName 
 
 
+---> armazenar connection
+
 
 
 ---> Provisionar Worksapce do Azure Databricks:
@@ -95,10 +69,18 @@ Driver: Standard_D3_v2, 2 workers
 Nome da tarefa: fraudFastLoad
 
 
+---> Criar Scope do Databricks para sincronizar com AZURE_KEYVAULT
+
+https://adb-2405977659128258.18.azuredatabricks.net/?o=2405977659128258#secrets/createScope
+nome = dbwsscope
+
 ---> Apagar Grupo de Recursos:
 
 az group delete --name rgfraud
 
 
-
-com.microsoft.azure:azure-eventhubs-spark_2.12:2.3.22
+fs.azure.account.auth.type OAuth
+fs.azure.account.oauth.provider.type org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider
+fs.azure.account.oauth2.client.id 775d1965-2ada-4399-adb9-ead9caaf4d72
+fs.azure.account.oauth2.client.secret {{secrets/dbwsscope/spn-secret}}
+fs.azure.account.oauth2.client.endpoint https://login.microsoftonline.com/dc25df03-ffa5-4111-b188-46fe6cd26a3a/oauth2/token
