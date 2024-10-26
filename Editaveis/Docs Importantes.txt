@@ -6,3 +6,5 @@ Melhores práticas notebooks databricks: https://docs.databricks.com/pt/notebook
 Orquestrar com airflow: https://docs.databricks.com/pt/jobs/how-to/use-airflow-with-jobs.html
 Conexão Databricks e PowerBI: https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks-using-partner-connect
 Scope databricks e azure: https://learn.microsoft.com/pt-br/azure/databricks/security/secrets/secret-scopes
+SPN e cerimonia de senha: https://learn.microsoft.com/pt-br/purview/create-service-principal-azure?wt.mc_id=searchAPI_azureportal_inproduct_rmskilling&sessionId=0abc89b1f1db41dab5daf6e89dc8ae17_ae7b9b86ed8549048010a14f29262bb1
+Configurar SPN no cluster databricks: https://learn.microsoft.com/pt-br/azure/databricks/connect/storage/tutorial-azure-storage
