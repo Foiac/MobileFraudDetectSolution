@@ -2,11 +2,11 @@ from pydantic_settings import BaseSettings
 import os
 
 class Settings(BaseSettings):
-    azure_tenant_id: str = "333cdf23-94bc-450f-a816-9989c891494b" #os.getenv('AZURE_TENANT_ID')
-    azure_client_id: str = "0bc1b99e-9403-4708-8019-df5ab484380b" #os.getenv('AZURE_CLIENT_ID')
-    azure_client_secret: str = "bss8Q~534wTOlXqyh.eE2Ya6D3I9S4meioBY3dcR" #os.getenv('AZURE_CLIENT_SECRET')
-    eventhub_namespace: str = "eventhub-dev-stbr" #os.getenv('EVENTHUB_NAMESPACE')
-    eventhub_name: str = "frauddetect" #os.getenv('EVENTHUB_NAME')
+    azure_tenant_id: str = "dc25df03-ffa5-4111-b188-46fe6cd26a3a" #os.getenv('AZURE_TENANT_ID')
+    azure_client_id: str = "7060731f-a210-43a3-8217-e6741e224f03" #os.getenv('AZURE_CLIENT_ID')
+    azure_client_secret: str = "91x8Q~UMwd8-OacWvtFOhyluo3LfukC~QgQREdqT" #os.getenv('AZURE_CLIENT_SECRET')
+    eventhub_namespace: str = "fraud-eh-namespacer" #os.getenv('EVENTHUB_NAMESPACE')
+    eventhub_name: str = "fraud-detect" #os.getenv('EVENTHUB_NAME')
 
 settings = Settings()
 
