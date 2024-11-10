@@ -27,6 +27,7 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 - Worker: 2xStandard_E8ds_v4 -> Bom equilíbrio entre CPU, memória e I/O de disco, o que a torna uma escolha ideal para pipelines de processamento leve, como no seu caso de uso. Manter 2 workers ativos é uma boa prática para garantir que o cluster esteja disponível para pequenas variações de carga e garantir que o Spark Streaming possa continuar lendo e processando os dados mesmo em momentos de baixa demanda (8 vCPUs, 64 GB de RAM)
 
 - OBS: alterei as máquinas para standard_D4s_v3, ficou mais barato
+- OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
   
 #### III. Explicação sobre o case desenvolvido
 
