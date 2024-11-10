@@ -1,7 +1,7 @@
 # MobileFraudDetectSolution - Identificando Tentativas de Fraudes em Aplicativos Mobile
 ## Case Data Master 2024
 
-#### I. Resumo e Objetivo do Case
+### I. Resumo e Objetivo do Case
 
 Fraudes em logins de aplicativos de transações financeiras têm se tornado cada vez mais sofisticadas, especialmente em dispositivos móveis. Uma das práticas mais comuns é o Account Takeover (ATO), que ocorre quando invasores conseguem acesso não autorizado a uma conta legítima, muitas vezes utilizando técnicas de engenharia social, phishing, ou através da forma mais básica desse tipo de ataque, que envolve ataques de força bruta orientados por bots, que enviam combinações aleatórias de caracteres a formulários de login até encontrar a combinação de credenciais da conta.
 
