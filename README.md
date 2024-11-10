@@ -28,10 +28,25 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 
 - OBS: alterei as máquinas para standard_D4s_v3, ficou mais barato
 - OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
+- OBS: Falar aqui sobre os requisitos técnicos e funcionais
+- OBS: Descrever as tecnologias utilizadas e o papel de cada uma delas e a justificativa
   
 ## III. Explicação sobre o case desenvolvido
 
+Esqueleto: 
+
+- Origem dos dados
+- Detalhar o processo de ingestão falando da técnica utilizada e justificar a escolha, aqui falar também do que foi feito em detalhes
+- falar do processo de transformação da silver e da gold
+- falar qual versão do spark foi utilizada e porque
+- falar como os dados estão organizados no data lake e qual foi a estratégia de particionamento
+- falar sobre o destino final dos dados e sobre o dashboard
+- falar sobre o monitoramento
+
+
 ## IV. Melhorias e Considerações finais
+
+
 
 #### Provisionando a infraestrutura
 1 - Abrir terminal Bash da Azure e Clonar o repositório executando o comando a seguir
