@@ -24,7 +24,7 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 A Figura 1 apresenta a arquitetura de funcionamento para ingestão e transformação de dados coletados de uma sistema de login para aplicativos móveis.
 
 <p align="center">
-  <img src="Editaveis/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1000">
+  <img src="Editaveis/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Legenda centralizada</em>
 </p>
