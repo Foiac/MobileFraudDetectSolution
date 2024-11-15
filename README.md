@@ -1,4 +1,4 @@
-# MobileFraudDetectSolution - Identificando Tentativas de Fraudes em Aplicativos Mobile
+# Mobile Fraud Detect Solution - Identificando Tentativas de Fraudes em Aplicativos Mobile
 ## Case Data Master 2024
 
 ## I. Resumo e Objetivo do Case
@@ -41,7 +41,7 @@ O *AKV* permite o armazenamentodos segredos das *Service Principals (SPNs)* para
 
 Com foco em armazenamento de grande volume de dados e com suporte nativo ao Hadoop Distributed File System (HDFS) facilitando a integração com ferramentas de big data como Apache Spark, Databricks e outras, o *ADLS Gen2* é uma das melhores escolhas. Contando também com camada de armazenamento hierarquico o que permite melhor desempenho ao acessar grandes quantidades de dados oraganizados em diretórios, o que é muito útil ao se adotar uma arquitetura de dados medalhão. Outra grande vantagem da utilização do *ADLS Gen2* é o suporte para criptografia de dados com chave gerenciada pelo cliente.
 
-Por fim, como uma estratégia de monitoramento foi utilizado o Azure Monitor por simplicidade, por ser uma ferramenta nativa da Azure, não sendo necessário realizar grandes configurações para coletar métricas de funcionamento da solução.
+Por fim, como estratégia de monitoramento foi utilizado o Azure Monitor por simplicidade, por ser uma ferramenta nativa da Azure, não sendo necessário realizar grandes configurações para coletar métricas de funcionamento da solução.
  
 - Driver: 1xStandard_D8_v3 -> Robusto o suficiente para coordenar execução de tarefas e comunicar com os nós já que tem um bom poder de processamento e memória (8 vCPUs, 32 GB de RAM)
 - Worker: 2xStandard_E8ds_v4 -> Bom equilíbrio entre CPU, memória e I/O de disco, o que a torna uma escolha ideal para pipelines de processamento leve, como no seu caso de uso. Manter 2 workers ativos é uma boa prática para garantir que o cluster esteja disponível para pequenas variações de carga e garantir que o Spark Streaming possa continuar lendo e processando os dados mesmo em momentos de baixa demanda (8 vCPUs, 64 GB de RAM)
