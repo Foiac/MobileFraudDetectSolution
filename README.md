@@ -21,23 +21,29 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 
 ## II. Arquitetura de Solução e Arquitetura Técnica
 
+- OBS: Falar aqui sobre os requisitos técnicos e funcionais
+  
 A Figura 1 apresenta a arquitetura de funcionamento para ingestão e transformação de dados coletados de uma sistema de login para aplicativos móveis.
 
 <p align="center">
   <img src="Editaveis/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
-  <em>Legenda centralizada</em>
+  <em>Figura 1: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
 
-![Arquitetura de funcionamento](Editaveis/mobile-fraud-detect-V1.jpeg)
+Para a ingestão foi escolhido o Eventhub com *SKU Basic* por ter o menor custo, como não é possível utilizar o *capture* para consumo dos dados do eventhub, e visando garantir que não haverá perca das mensagens devido ao intervalo de retenção do *SKU Basic* (um dia) uma solução com spark streaming para ingestão dos dados em uma camada Bronze, torna-se uma opção viável.
 
+Na camada de processamento é possível utilizar o Databricks para realizar a ingestão e transformação dos dados garantindo segurança já que a solução envolve dados sensíveis de usuários, escalabilidade visto que geralmente aplicativos de transações financeiras geralmente atendem a milhares de usuários e existe forte sazonalidade, onde em alguns momentos é necessário um maior poder computacional e eficiência já que conta com uma série de recursos que ajudam a otimizar os processos, como o *Adaptive Query Execution - AQE*, *Optimization*, *Z-Order* e diversos outros recursos que ajudam a reduzir custos. 
 
+Para ser possível sincronizar as *secrets* armazenadas no Azure Key Vault e garantir a segurança para leitura e escrita e permitindo anonimização dos dados de forma eficiente é necessário o provisionamento do Databricks *Workspace Premium*, já que este permite a sincronização do *scope* com o AKV.
+
+Com foco em armazenamento de grande volume de dados e com suporte nativo ao Hadoop Distributed File System (HDFS) 
+ 
 - Driver: 1xStandard_D8_v3 -> Robusto o suficiente para coordenar execução de tarefas e comunicar com os nós já que tem um bom poder de processamento e memória (8 vCPUs, 32 GB de RAM)
 - Worker: 2xStandard_E8ds_v4 -> Bom equilíbrio entre CPU, memória e I/O de disco, o que a torna uma escolha ideal para pipelines de processamento leve, como no seu caso de uso. Manter 2 workers ativos é uma boa prática para garantir que o cluster esteja disponível para pequenas variações de carga e garantir que o Spark Streaming possa continuar lendo e processando os dados mesmo em momentos de baixa demanda (8 vCPUs, 64 GB de RAM)
 
 - OBS: alterei as máquinas para standard_D4s_v3, ficou mais barato
-- OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
-- OBS: Falar aqui sobre os requisitos técnicos e funcionais
+
 - OBS: Descrever as tecnologias utilizadas e o papel de cada uma delas e a justificativa
   
 ## III. Explicação sobre o case desenvolvido
@@ -51,6 +57,7 @@ Esqueleto:
 - falar como os dados estão organizados no data lake e qual foi a estratégia de particionamento
 - falar sobre o destino final dos dados e sobre o dashboard
 - falar sobre o monitoramento
+- OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
 
 
 ## IV. Melhorias e Considerações finais
