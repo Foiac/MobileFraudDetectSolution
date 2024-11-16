@@ -21,7 +21,7 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 
 ## II. Arquitetura de Solução e Arquitetura Técnica
 
-Existem diversas estratégias para mitigar e resolver problemas de tentativas de fraude em sistemas Mobile e Web, desde estratégias de conscientização dos usuários a soluções Anti-Bot, porém, para escolher e avalair a estratégia mais assertiva é importante que os setores de risco e fraude consiga identificar e entender quais as principais carateríticas do perigo eminente. A coleta e avaliação de logs de aplicação como ilustrado na Figura 1 com soluções de monitoramento ou dados ajuda o analista nesta avaliação.
+Existem diversas estratégias para mitigar e resolver problemas de tentativas de fraude em sistemas Mobile e Web, desde estratégias de conscientização dos usuários a soluções Anti-Bot, onde para escolher e avaliar a estratégia mais assertiva é importante que os setores de risco e fraude consiga identificar e entender quais as principais carateríticas do perigo eminente. A coleta e avaliação de logs de aplicação como ilustrado na Figura 1 com soluções de monitoramento ou dados auxilia o profissional de fraude e as áreas de negócio no fluxo de escolha de estratégias de proteção e melhoria.
 
 <p align="center">
   <img src="Editaveis/mobile-fraud-detect-funct.jpeg" alt="Arquitetura Técnica" width="1100">
@@ -29,12 +29,7 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
   <em>Figura 1: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
 
-- Falar como uma solução de monitoramento ajuda e como uma solução de dados ajuda.
-
-A solução apresentada para a coleta e avaliação dos dados atende a necessidade de um analista de fraudes de ter visibilidade sobre a utilização do aplicativo móvel, conseguindo identificar cenários de possível fraude ao realizar o login tornando possível 
-- OBS: Falar aqui sobre os requisitos técnicos e funcionais
-  
-A Figura 2 apresenta a arquitetura de funcionamento para ingestão e transformação de dados coletados de uma sistema de login para aplicativos móveis.
+A Figura 2 apresenta a arquitetura técnica de funcionamento para ingestão e transformação de dados coletados de uma sistema de login para aplicativos móveis.
 
 <p align="center">
   <img src="Editaveis/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
