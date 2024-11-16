@@ -61,6 +61,15 @@ Todo o desenvolvimento deste trabalho se concetra na solução de ingestão e tr
 
 Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, como apresentado na Figura 3, a solução streaming realiza um fluxo de leitura do Eventhub utilizando o pacote [`azure-event-hubs-spark`](https://github.com/Azure/azure-event-hubs-spark) que simplifica a conexão do Spark com o eventhub, sendo necessário a instalação do pacote no cluster provisionado no Databricks. Uma das desvantagens da utilização desse conector é que não há suporte para processo de autorização das mensagens com AAD através da SPN de forma simples, a documentação do pacote apresenta uma forma de realizar a autenticação via AAD com uma adptação com a criação de uma classe de callback desenvolvida em Scala, mais detalhes seguir o [link](https://github.com/Azure/azure-event-hubs-spark/blob/master/docs/use-aad-authentication-to-connect-eventhubs.md), mas para simplificar o case e reduzir o desenvolvimento a somente uma linguagem de programação, optou-se pela autorização através de *Connection String* do eventhub armazenado no AKV e sincronizada com o *Scope* do Databricks.
 
+<p align="center">
+  <img src="Editaveis/eventhubstreamingingestion.png" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
+</p>
+
+Há alguns pontos de atenção no processo de obtenção das mensagens e gravação no container Bronze:
+
+- O processo de escrita
 
 - Detalhar o processo de ingestão falando da técnica utilizada e justificar a escolha, aqui falar também do que foi feito em detalhes
 - falar do processo de transformação da silver e da gold
