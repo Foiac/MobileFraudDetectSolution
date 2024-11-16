@@ -53,11 +53,12 @@ Por fim, como estratégia de monitoramento foi utilizado o Azure Monitor por sim
  
 ## III. Explicação sobre o case desenvolvido
 
-Todo o desenvolvimento deste trabalho se concetra na solução de ingestão e transformação de dados, abordando e utilizando técnicas de Engenharia de Dados, assim, o desenvolvimento da ingestão de dados no Eventhub utilizando Python se deu através de um notebook python que mocka os dados e realiza o envio dos dados para o broker de mensageria através do protocolo AMQP, utilizando uma Service Principal com *role* apenas de envio de dados, onde o notebook desenvolvido para esta solução é encontrado seguindo o [link](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/0%20-%20mockData/generateMockData.py).
+Todo o desenvolvimento deste trabalho se concetra na solução de ingestão e transformação de dados, abordando e utilizando técnicas de Engenharia de Dados, assim, o desenvolvimento da ingestão de dados no Eventhub foi implementado através de um notebook python que mocka os dados e realiza o envio dos dados para o broker de mensageria através do protocolo AMQP, utilizando uma Service Principal com *role* apenas de envio de dados, onde o notebook desenvolvido para esta solução é encontrado seguindo o [link](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/0%20-%20mockData/generateMockData.py).
 
-Esqueleto: 
+O processo de ingestão e transformação dos dados desta solução caracteriza uma arquitetura Lambda, já que, como explicado anteriormente a solução streaming é utilizada para garantir que não exista perca das mensagens por expiração das mesmas no eventhub, e para processamento das camadas silver e gold os jobs foram desenvolvidos para terem um fluxo batch com uma execução por dia.
 
-- Origem dos dados
+Para ser possível replicar a infra deste trabalho é necessário uma assinatura do provedor de cloud Azure, um grupo de recursos e o provisionamento dos seguintes recursos: *Eventhub Namespace* básico, *Azure Key Vault* Padrão, *Storage Account* com *Namespace* hierárquico e Databricks *Workspace Premium*. Afim de facilitar o provisionamento da infraestrutura, disponibilizo aqui o [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh) para disponibilização dos recursos citados anteriormente.
+
 - Detalhar o processo de ingestão falando da técnica utilizada e justificar a escolha, aqui falar também do que foi feito em detalhes
 - falar do processo de transformação da silver e da gold
 - falar qual versão do spark foi utilizada e porque
