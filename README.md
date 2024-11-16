@@ -45,19 +45,12 @@ Para ser possível sincronizar as *secrets* armazenadas no Azure Key Vault e gar
 
 O *AKV* permite o armazenamentodos segredos das *Service Principals (SPNs)* para que as aplicações de ingestão e transformação de dados consigam resgatar os valores de forma segura.
 
-Para processamento dos dados o tipo de instância escolhida para o Driver e os Workers foi o Standard_D4s_v3
+Para processamento dos dados o tipo de instância escolhida para o Driver e os Workers foi o Standard_D4s_v3, que é otimizada para cargas de trabalho gerais (já que neste case é utilizado o mesmo cluster para ingestão e transformação de dados) com um bom equilíbrio entre CPU (4 vCPUs), memória (16 GB de RAM) e capacidade de armazenamento (32 GB SSD).
 
 Com foco em armazenamento de grande volume de dados e com suporte nativo ao *Hadoop Distributed File System (HDFS)* facilitando a integração com ferramentas de big data como Apache Spark, Databricks e outras, o *ADLS Gen2* é uma das melhores escolhas. Contando também com camada de armazenamento hierarquico o que permite melhor desempenho ao acessar grandes quantidades de dados oraganizados em diretórios, o que é muito útil ao se adotar uma arquitetura de dados medalhão. Outra grande vantagem da utilização do *ADLS Gen2* é o suporte para criptografia de dados com chave gerenciada pelo cliente.
 
 Por fim, como estratégia de monitoramento foi utilizado o Azure Monitor por simplicidade, por ser uma ferramenta nativa da Azure, não sendo necessário realizar grandes configurações para coletar métricas de funcionamento da solução.
  
-- Driver: 1xStandard_D8_v3 -> Robusto o suficiente para coordenar execução de tarefas e comunicar com os nós já que tem um bom poder de processamento e memória (8 vCPUs, 32 GB de RAM)
-- Worker: 2xStandard_E8ds_v4 -> Bom equilíbrio entre CPU, memória e I/O de disco, o que a torna uma escolha ideal para pipelines de processamento leve, como no seu caso de uso. Manter 2 workers ativos é uma boa prática para garantir que o cluster esteja disponível para pequenas variações de carga e garantir que o Spark Streaming possa continuar lendo e processando os dados mesmo em momentos de baixa demanda (8 vCPUs, 64 GB de RAM)
-
-- OBS: alterei as máquinas para standard_D4s_v3, ficou mais barato
-
-- OBS: Descrever as tecnologias utilizadas e o papel de cada uma delas e a justificativa
-  
 ## III. Explicação sobre o case desenvolvido
 
 Esqueleto: 
