@@ -67,9 +67,20 @@ Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, com
   <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
 </p>
 
-Há alguns pontos de atenção no processo de obtenção das mensagens e gravação no container Bronze:
+Há alguns pontos de atenção no processo de obtenção das mensagens e gravação no container `Bronze`:
 
-- O processo de escrita
+
+- Para garantir segurança sobre os dados sensíveis foi utilizado uma estratégia de anonimização da informação no momento da ingestão, foi criado um hash com SHA-256 nas informações de IMEI, MAC, CPF e Senha de usuário concatenando estas com uma palavra chave armazenado no *Scope* do Databricks e resgatada em tempo de execução.
+
+
+
+
+
+
+
+
+
+
 
 - Detalhar o processo de ingestão falando da técnica utilizada e justificar a escolha, aqui falar também do que foi feito em detalhes
 - falar do processo de transformação da silver e da gold
