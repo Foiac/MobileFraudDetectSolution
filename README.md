@@ -103,6 +103,7 @@ Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em
   <em>Figura 6: Amostra da tabela Gold agregada por usuário com números quantitativos dos acessos do usuário no dia</em>
 </p>
 
+Mais detalhes sobre o processo de criação da tabela Gold, é possível verificar no notebook [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/release/v1/dev-notebooks/4%20-%20goldBatch/dataJobUserAgg.ipynb).
 
 
 
