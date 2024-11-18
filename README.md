@@ -80,15 +80,28 @@ O processo de criação da tabela `Silver`, apresentado na Figura 4, consiste na
 <p align="center">
   <img src="Editaveis/silverjobtransformer.png" alt="Arquitetura Técnica" width="1100">
   <br>
-  <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
+  <em>Figura 4: Job de transformação de dados para geração de uma camada Silver</em>
 </p>
 
 O job de transformação dos dados para uma camada `Silver` foi desenvolvido pensando na execução diária e com incremento na tabela já existente, criando partições da tabela delta a partir da data de criação do evento. Para mais detalhes sobre a impelentação do job, é possível verificar o notebook [dataJobClean.py](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/2%20-%20silverBatch/dataJobClean.py).
 
+#### Tabela `Gold`
 
+Por fim, para geração de um dado altamente agregado e com informações que facilitam a detecção de fraudes optou-se por um método de *Feature Engineering* para criação da tabela `Gold` (Figura 5), que para esta solução consiste na criação de uma tabela com colunas para agregação por usuário de: quantidade tentativas de acesso, acessos com sucesso, número de dispositivos utilizados, quantas redes foram utilizadas, contagem de senhas utilizadas, número de dispositivos habilitados para transação, quantidade distinta de versões de aplicativo utilizadas, total de localizações distintas e com uma coluna que indica uma *flag* de risco de fraude. 
 
+<p align="center">
+  <img src="Editaveis/goldjobtransformer.png" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 5: Job de transformação de dados para geração de uma camada Gold com valor para o negócio</em>
+</p>
 
+Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em regras simples como quantidade de acessos realizados, dispositivos habilitados para transações, quantas senhas diferentes forma tentadas e localizações onde o acesso foi realizado em um mesmo dia, amostra da tabelas gerada é ilsutrada na Figura 6, entretanto, é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomaliaas como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
 
+<p align="center">
+  <img src="Editaveis/goldtable.png" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 5: Amostra da tabela Gold Gerada</em>
+</p>
 
 
 
