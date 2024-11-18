@@ -66,11 +66,11 @@ Como descrito na seção de arquitetura, é necessário a criação de um cluste
     "cluster_name": "fraud-cluster",
     "spark_version": "13.3.x-scala2.12",
     "spark_conf": {
-        "spark.hadoop.fs.azure.account.oauth2.client.secret.stacmfraud.dfs.core.windows.net": "{{secrets/dbwsscope/spn-secret}}",
-        "spark.hadoop.fs.azure.account.oauth2.client.id.stacmfraud.dfs.core.windows.net": "775d1965-2ada-4399-adb9-ead9caaf4d72",
-        "spark.hadoop.fs.azure.account.auth.type.stacmfraud.dfs.core.windows.net": "OAuth",
-        "spark.hadoop.fs.azure.account.oauth.provider.type.stacmfraud.dfs.core.windows.net": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
-        "spark.hadoop.fs.azure.account.oauth2.client.endpoint.stacmfraud.dfs.core.windows.net": "https://login.microsoftonline.com/dc25df03-ffa5-4111-b188-46fe6cd26a3a/oauth2/token"
+        "spark.hadoop.fs.azure.account.oauth2.client.secret.[my-storage-account-name].dfs.core.windows.net": "{{secrets/dbwsscope/spn-secret}}",
+        "spark.hadoop.fs.azure.account.oauth2.client.id.[my-storage-account-name].dfs.core.windows.net": [my-spn-app-id],
+        "spark.hadoop.fs.azure.account.auth.type.[my-storage-account-name].dfs.core.windows.net": "OAuth",
+        "spark.hadoop.fs.azure.account.oauth.provider.type.[my-storage-account-name].dfs.core.windows.net": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
+        "spark.hadoop.fs.azure.account.oauth2.client.endpoint.[my-storage-account-name].dfs.core.windows.net": "https://login.microsoftonline.com/[my-tenant-id]/oauth2/token"
     },
     "azure_attributes": {
         "first_on_demand": 1,
