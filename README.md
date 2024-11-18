@@ -78,9 +78,9 @@ Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Str
 O processo de criação da tabela `Silver`, apresentado na Figura 4, consiste na normalização dos dados ingeridos para evitar possíveis problemas de geração ou ingestão dos dados que possam trazer problemas durante a análise, garantindo integridade dos mesmos. Outro ponto tratado nos dados da camada `Bronze` está na conversão das informações de cúmulo técnico em informações funcionais, como o objetivo final é gerar insumo para um analista de fraudes que está mais preocupado com os padrões de comportamento que possam ser um indício de risco, converte-se os dados das colunas de erro, api e endpoint em informações de erro funcional, que são mais simples para o entendimento de perfis menos técnicos.
 
 <p align="center">
-  <img src="[Editaveis/eventhubstreamingingestion.png" alt="Arquitetura Técnica](https://raw.githubusercontent.com/Foiac/MobileFraudDetectSolution/main/Editaveis/silverjobtransformer.png)" width="1100">
+  <img src="Editaveis/silverjobtransformer.png" alt="Arquitetura Técnica" width="1100">
   <br>
-  <em>Figura 4: Job de transformação dos dados para camada Silver</em>
+  <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
 </p>
 
 O job de transformação dos dados para uma camada `Silver` foi desenvolvido pensando na execução diária e com incremento na tabela já existente, criando partições da tabela delta a partir da data de criação do evento.
