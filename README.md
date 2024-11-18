@@ -71,11 +71,19 @@ Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, com
 
 Para garantir segurança sobre os dados sensíveis foi utilizado uma estratégia de anonimização da informação no momento da ingestão na camada `Bronze`, criou-se um hash com SHA-256 nas informações de IMEI, MAC, CPF e Senha de usuário concatenando estas com uma palavra chave armazenado no *Scope* do Databricks e resgatada em tempo de execução.
 
-Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Streaming uma janela de processamento de 2 minutos para criação do data frame e por consequência o arquivo parquet em uma Delta Table. É possível ter mais detalhes sobre o job de ingestão olhando o código desenvolido no notebook [dataStreamingLoad.py](https://github.com/Foiac/MobileFraudDetectSolution/tree/main/dev-notebooks/1%20-%20eventhubToBronzeStreaming).
+Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Streaming uma janela de processamento de 2 minutos para criação do data frame e por consequência o arquivo parquet em uma Delta Table. É possível ter mais detalhes sobre o job de ingestão olhando o código desenvolido no notebook [dataStreamingLoad.py](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/1%20-%20eventhubToBronzeStreaming/dataStreamingLoad.py).
 
 #### Tabela `Silver`
 
-O processo de criação da tabela `Silver` consiste na normalização dos dados ingeridos para evitar possíveis problemas de geração ou ingestão dos dados que possam trazer problemas na análise dos dados, garantindo integridade dos mesmo. Outro ponto a sert
+O processo de criação da tabela `Silver`, apresentado na Figura 4, consiste na normalização dos dados ingeridos para evitar possíveis problemas de geração ou ingestão dos dados que possam trazer problemas durante a análise, garantindo integridade dos mesmos. Outro ponto tratado nos dados da camada `Bronze` está na conversão das informações de cúmulo técnico em informações funcionais, como o objetivo final é gerar insumo para um analista de fraudes que está mais preocupado com os padrões de comportamento que possam ser um indício de risco, converte-se os dados das colunas de erro, api e endpoint em informações de erro funcional, que são mais simples para o entendimento de perfis menos técnicos.
+
+<p align="center">
+  <img src="[Editaveis/eventhubstreamingingestion.png" alt="Arquitetura Técnica](https://raw.githubusercontent.com/Foiac/MobileFraudDetectSolution/main/Editaveis/silverjobtransformer.png)" width="1100">
+  <br>
+  <em>Figura 4: Job de transformação dos dados para camada Silver</em>
+</p>
+
+O job de transformação dos dados para uma camada `Silver` foi desenvolvido pensando na execução diária e com incremento na tabela já existente, criando partições da tabela delta a partir da data de criação do evento.
 
 
 
