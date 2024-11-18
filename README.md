@@ -100,7 +100,7 @@ Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em
 <p align="center">
   <img src="Editaveis/goldtable.png" alt="Arquitetura Técnica" width="1100">
   <br>
-  <em>Figura 5: Amostra da tabela Gold Gerada</em>
+  <em>Figura 6: Amostra da tabela Gold agregada por usuário com números quantiativos dos acessos do usuário no dia</em>
 </p>
 
 
