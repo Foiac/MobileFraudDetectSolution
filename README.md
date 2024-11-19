@@ -144,19 +144,15 @@ Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em
 
 Mais detalhes sobre o processo de criação da tabela Gold, é possível verificar no notebook [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/release/v1/dev-notebooks/4%20-%20goldBatch/dataJobUserAgg.ipynb).
 
+#### Exemplo de Data Visualization
 
+#### Monitoramento
 
-- Detalhar o processo de ingestão falando da técnica utilizada e justificar a escolha, aqui falar também do que foi feito em detalhes
-- falar do processo de transformação da silver e da gold
-- falar qual versão do spark foi utilizada e porque
 - falar como os dados estão organizados no data lake e qual foi a estratégia de particionamento
-- falar sobre o destino final dos dados e sobre o dashboard
-- falar sobre o monitoramento
-- OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
-
 
 ## IV. Melhorias e Considerações finais
 
+- OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
 
 
 #### Provisionando a infraestrutura
