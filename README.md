@@ -146,7 +146,7 @@ Mais detalhes sobre o processo de criação da tabela Gold, é possível verific
 
 ### _Exemplo de Data Visualization_
 
-Como sugestão de painel para identificação de rápida de eventos e usuários com riscos de fraudes foi construido o relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Fiugura 9. O arquivo `*PBIX*` está disponível no [link]().
+Como sugestão de painel para identificação de rápida de eventos e usuários com riscos de fraudes foi construido o relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo `*PBIX*` está disponível no [link]().
 
 <p align="center">
   <img src="Editaveis/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
