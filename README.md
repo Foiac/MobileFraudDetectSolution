@@ -146,6 +146,25 @@ Mais detalhes sobre o processo de criação da tabela Gold, é possível verific
 
 ### _Exemplo de Data Visualization_
 
+<p align="center">
+  <img src="Editaveis/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 7: Home do painel com informações de apresentação e descrição das métricas</em>
+</p>
+
+<p align="center">
+  <img src="Editaveis/indicadores-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 8: Tela de indicadores</em>
+</p>
+
+<p align="center">
+  <img src="Editaveis/analitico-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 9: Analítico para avaliação de eventos por usuário</em>
+</p>
+
+
 ### _Monitoramento_
 
 - falar como os dados estão organizados no data lake e qual foi a estratégia de particionamento
