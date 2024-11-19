@@ -1,5 +1,4 @@
 # Mobile Fraud Detect Solution - Identificando Tentativas de Fraudes em Aplicativos Mobile
-## Case Data Master 2024
 
 ## I. Resumo e Objetivo do Case
 
