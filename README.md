@@ -57,7 +57,7 @@ O processo de ingestão e transformação dos dados desta solução caracteriza 
 
 Para ser possível replicar a infra deste trabalho é necessário uma assinatura do provedor de cloud Azure, um grupo de recursos e o provisionamento dos seguintes recursos: *Eventhub Namespace* básico, *Azure Key Vault* Padrão, *Storage Account* com *Namespace* hierárquico e Databricks *Workspace Premium*. Afim de facilitar o provisionamento da infraestrutura, disponibilizo aqui o [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh) para disponibilização dos recursos citados anteriormente.
 
-#### Cluster Databricks e Scope
+### Cluster Databricks e Scope
 
 Como descrito na seção de arquitetura, é necessário a criação de um cluster, a seguir é disponibilizado o json para facilitar o provisionamento, basta substituir [my-storage-account-name] pelo nome do recurso ADLS provisionado, [my-spn-client-id] pelo *client id* da SPN criada no AAD e o [my-tenant-id] pelo *tenant id* da assinatura.
 
@@ -96,7 +96,7 @@ Como nas configurações do spark é referenciado uma variável para consumo da 
 
 Para o cluster foi utilizado a versão Databricks Runtime 13.3 que conta com a versão 3.4.1 do Apache Spark sendo uma versão robusta e estável.
 
-#### Ingestão `Bronze`
+### Ingestão `Bronze`
 
 Todo o desenvolvimento deste trabalho se concentra na solução de ingestão e transformação de dados, abordando e utilizando técnicas de Engenharia de Dados, assim, o desenvolvimento da ingestão de dados no Eventhub foi implementado através de um notebook python que mocka os dados e realiza o envio dos dados para o broker de mensageria através do protocolo AMQP, utilizando uma Service Principal com *role* apenas de envio de dados, onde o notebook desenvolvido para esta solução é encontrado seguindo o [link](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/0%20-%20mockData/generateMockData.py). O processo de envio dos dados para o tópico do eventhub é possível através da utilização dos pacotes [`azure-identity`](https://learn.microsoft.com/en-us/python/api/overview/azure/identity-readme?view=azure-python) para autorizar o componente através da *SPN* spn-prdcr e [`azure-eventhub`](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-python-get-started-send?tabs=passwordless%2Croles-azure-portal) para realização de comunicação com o recurso, permitindo envio das informações utilizando *batches* de eventos produzidos pelo componente Python.
 
@@ -112,7 +112,7 @@ Para garantir segurança sobre os dados sensíveis foi utilizado uma estratégia
 
 Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Streaming uma janela de processamento de 2 minutos para criação do data frame e por consequência o arquivo parquet em uma Delta Table. É possível ter mais detalhes sobre o job de ingestão olhando o código desenvolido no notebook [dataStreamingLoad.py](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/1%20-%20eventhubToBronzeStreaming/dataStreamingLoad.py).
 
-#### Tabela `Silver`
+### Tabela `Silver`
 
 O processo de criação da tabela `Silver`, apresentado na Figura 4, consiste na normalização dos dados ingeridos para evitar possíveis problemas de geração ou ingestão dos dados que possam trazer problemas durante a análise, garantindo integridade dos mesmos. Outro ponto tratado nos dados da camada `Bronze` está na conversão das informações de cúmulo técnico em informações funcionais, como o objetivo final é gerar insumo para um analista de fraudes que está mais preocupado com os padrões de comportamento que possam ser um indício de risco, converte-se os dados das colunas de erro, api e endpoint em informações de erro funcional, que são mais simples para o entendimento de perfis menos técnicos.
 
@@ -124,7 +124,7 @@ O processo de criação da tabela `Silver`, apresentado na Figura 4, consiste na
 
 O job de transformação dos dados para uma camada `Silver` foi desenvolvido pensando na execução diária e com incremento na tabela já existente, criando partições da tabela delta a partir da data de criação do evento. Para mais detalhes sobre a impelentação do job, é possível verificar o notebook [dataJobClean.py](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/2%20-%20silverBatch/dataJobClean.py).
 
-#### Tabela `Gold`
+### Tabela `Gold`
 
 Por fim, para geração de um dado altamente agregado e com informações que facilitam a detecção de fraudes optou-se por um método de *Feature Engineering* para criação da tabela `Gold` (Figura 5), que para esta solução consiste na criação de uma tabela com colunas para agregação por usuário de: quantidade tentativas de acesso, acessos com sucesso, número de dispositivos utilizados, quantas redes foram utilizadas, contagem de senhas utilizadas, número de dispositivos habilitados para transação, quantidade distinta de versões de aplicativo utilizadas, total de localizações distintas e com uma coluna que indica uma *flag* de risco de fraude. 
 
@@ -144,9 +144,9 @@ Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em
 
 Mais detalhes sobre o processo de criação da tabela Gold, é possível verificar no notebook [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/release/v1/dev-notebooks/4%20-%20goldBatch/dataJobUserAgg.ipynb).
 
-#### Exemplo de Data Visualization
+### Exemplo de Data Visualization
 
-#### Monitoramento
+### Monitoramento
 
 - falar como os dados estão organizados no data lake e qual foi a estratégia de particionamento
 
