@@ -145,7 +145,7 @@ Mais detalhes sobre o processo de criação da tabela Gold, é possível verific
 
 ### _Exemplo de Data Visualization_
 
-Como sugestão de painel para identificação de rápida de eventos e usuários com riscos de fraudes foi construido o relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`* está disponível no [link](). Para conseguir realizar a conexão com o Azure databricks é necessário configurar o conector no Power BI inserindo o Access Token gerado e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
+Como sugestão de painel para identificação de rápida de eventos e usuários com riscos de fraudes foi construido o relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`* está disponível no [link](). Para conseguir realizar a conexão com o Azure databricks é necessário configurar o conector no Power BI inserindo o *Access Token* gerado e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
 
 <p align="center">
   <img src="Editaveis/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
