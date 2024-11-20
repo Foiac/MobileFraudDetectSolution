@@ -171,7 +171,7 @@ Como estratégia de monitoramento da solução, adotou-se a utilização do Azur
 arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
 
 <p align="center">
-  <img src="Editaveis/monitoramento.jpeg.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/monitoramento.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 10: Dashboard de monitoração da solução</em>
 </p>
