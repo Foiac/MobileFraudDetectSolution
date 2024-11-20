@@ -168,7 +168,7 @@ Como sugestão de painel para identificação de rápida de eventos e usuários 
 ### _Monitoramento_
 
 Como estratégia de monitoramento da solução, adotou-se a utilização do Azure Monitor com a construção de um painel para monitoramento do processo de ingestão de dados no tópico e processo de leitura e persistência dos dados na camada `Bronze`, ilustrado na Figura 10 e 
-arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Imagens/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
+arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Monitoramento/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
 
 <p align="center">
   <img src="Editaveis/Imagens/monitoramento.jpeg" alt="Arquitetura Técnica" width="1100">
