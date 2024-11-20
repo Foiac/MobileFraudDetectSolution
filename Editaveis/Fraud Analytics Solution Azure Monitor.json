@@ -1,0 +1,653 @@
+{
+  "properties": {
+    "lenses": [
+      {
+        "order": 0,
+        "parts": [
+          {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "colSpan": 8,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "content": "",
+                  "title": "Eventhub",
+                  "subtitle": "Autentição e Mensagens",
+                  "markdownSource": 1,
+                  "markdownUri": ""
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 8,
+              "y": 0,
+              "colSpan": 8,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "content": "",
+                  "title": "Storage Account",
+                  "subtitle": "Leitura e persistëncia de dados",
+                  "markdownSource": 1,
+                  "markdownUri": ""
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 16,
+              "y": 0,
+              "colSpan": 2,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "id",
+                  "value": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.EventHub/namespaces/fraud-eh-namespace"
+                }
+              ],
+              "type": "Extension/Microsoft_Azure_EventHub/PartType/NamespaceOverviewPart"
+            }
+          },
+          {
+            "position": {
+              "x": 0,
+              "y": 1,
+              "colSpan": 8,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.EventHub/namespaces/fraud-eh-namespace"
+                          },
+                          "name": "IncomingRequests",
+                          "aggregationType": 1,
+                          "namespace": "microsoft.eventhub/namespaces",
+                          "metricVisualization": {
+                            "displayName": "Incoming Requests",
+                            "resourceDisplayName": "fraud-eh-namespace"
+                          }
+                        }
+                      ],
+                      "title": "Requests",
+                      "titleKind": 2,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              },
+              "filters": {
+                "EntityName": {
+                  "model": {
+                    "operator": "equals",
+                    "values": [
+                      "fraud-detect"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 8,
+              "y": 1,
+              "colSpan": 8,
+              "rowSpan": 4
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.Storage/storageAccounts/stacmfraud/blobservices/default"
+                          },
+                          "name": "Transactions",
+                          "aggregationType": 1,
+                          "namespace": "microsoft.storage/storageaccounts/blobservices",
+                          "metricVisualization": {
+                            "displayName": "Transactions",
+                            "resourceDisplayName": "blob"
+                          }
+                        }
+                      ],
+                      "title": "Transações realizadas",
+                      "titleKind": 2,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 16,
+              "y": 2,
+              "colSpan": 2,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "id",
+                  "value": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.Databricks/workspaces/wks-dtbs-fraud"
+                }
+              ],
+              "type": "Extension/Microsoft_Azure_Databricks/PartType/DatabricksPart",
+              "asset": {
+                "idInputName": "id",
+                "type": "Workspace"
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 0,
+              "y": 3,
+              "colSpan": 4,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.EventHub/namespaces/fraud-eh-namespace"
+                          },
+                          "name": "IncomingMessages",
+                          "aggregationType": 1,
+                          "namespace": "microsoft.eventhub/namespaces",
+                          "metricVisualization": {
+                            "displayName": "Incoming Messages",
+                            "resourceDisplayName": "fraud-eh-namespace"
+                          }
+                        }
+                      ],
+                      "title": "Mensagens enviadas",
+                      "titleKind": 2,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 4,
+              "y": 3,
+              "colSpan": 4,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "id": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.EventHub/namespaces/fraud-eh-namespace"
+                          },
+                          "name": "OutgoingMessages",
+                          "aggregationType": 1,
+                          "namespace": "microsoft.eventhub/namespaces",
+                          "metricVisualization": {
+                            "displayName": "Outgoing Messages",
+                            "resourceDisplayName": "fraud-eh-namespace"
+                          }
+                        }
+                      ],
+                      "title": "Mensagens lidas",
+                      "titleKind": 2,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 16,
+              "y": 3,
+              "colSpan": 2,
+              "rowSpan": 2
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "id",
+                  "value": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.Storage/storageAccounts/stacmfraud",
+                  "isOptional": true
+                },
+                {
+                  "name": "resourceId",
+                  "isOptional": true
+                },
+                {
+                  "name": "menuid",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ResourcePart",
+              "asset": {
+                "idInputName": "id"
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 0,
+              "y": 5,
+              "colSpan": 16,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [],
+              "type": "Extension/HubsExtension/PartType/MarkdownPart",
+              "settings": {
+                "content": {
+                  "content": "",
+                  "title": "Databricks",
+                  "subtitle": "Utilização de recurso",
+                  "markdownSource": 1,
+                  "markdownUri": ""
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 16,
+              "y": 5,
+              "colSpan": 2,
+              "rowSpan": 1
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "id",
+                  "value": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/rg-fraud/providers/Microsoft.KeyVault/vaults/kv-fraud"
+                }
+              ],
+              "type": "Extension/Microsoft_Azure_KeyVault/PartType/VaultPart",
+              "asset": {
+                "idInputName": "id",
+                "type": "KeyVault"
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 0,
+              "y": 6,
+              "colSpan": 8,
+              "rowSpan": 5
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "region": "westus",
+                            "resourceType": "microsoft.compute/virtualmachines",
+                            "subscription": {
+                              "subscriptionId": "14123559-deac-49b3-a06f-7e2c00e90336",
+                              "displayName": "Visual Studio Enterprise Subscription",
+                              "uniqueDisplayName": "Visual Studio Enterprise Subscription"
+                            }
+                          },
+                          "name": "Available Memory Bytes",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.compute/virtualmachines",
+                          "metricVisualization": {
+                            "displayName": "Available Memory Bytes (Preview)",
+                            "resourceDisplayName": "Visual Studio Enterprise Subscription"
+                          }
+                        }
+                      ],
+                      "title": "Memória disponível",
+                      "titleKind": 2,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      },
+                      "grouping": {
+                        "dimension": "Microsoft.ResourceId",
+                        "sort": 2,
+                        "top": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 8,
+              "y": 6,
+              "colSpan": 8,
+              "rowSpan": 5
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "options",
+                  "isOptional": true
+                },
+                {
+                  "name": "sharedTimeRange",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/MonitorChartPart",
+              "settings": {
+                "content": {
+                  "options": {
+                    "chart": {
+                      "metrics": [
+                        {
+                          "resourceMetadata": {
+                            "region": "westus",
+                            "resourceType": "microsoft.compute/virtualmachines",
+                            "subscription": {
+                              "subscriptionId": "14123559-deac-49b3-a06f-7e2c00e90336",
+                              "displayName": "Visual Studio Enterprise Subscription",
+                              "uniqueDisplayName": "Visual Studio Enterprise Subscription"
+                            }
+                          },
+                          "name": "Percentage CPU",
+                          "aggregationType": 4,
+                          "namespace": "microsoft.compute/virtualmachines",
+                          "metricVisualization": {
+                            "displayName": "Percentage CPU",
+                            "resourceDisplayName": "Visual Studio Enterprise Subscription"
+                          }
+                        }
+                      ],
+                      "title": "Média Percentage CPU para undefined in undefined region  por ResourceId",
+                      "titleKind": 1,
+                      "visualization": {
+                        "chartType": 2,
+                        "legendVisualization": {
+                          "isVisible": true,
+                          "position": 2,
+                          "hideHoverCard": false,
+                          "hideLabelNames": true
+                        },
+                        "axisVisualization": {
+                          "x": {
+                            "isVisible": true,
+                            "axisType": 2
+                          },
+                          "y": {
+                            "isVisible": true,
+                            "axisType": 1
+                          }
+                        },
+                        "disablePinning": true
+                      },
+                      "grouping": {
+                        "dimension": "Microsoft.ResourceId",
+                        "sort": 2,
+                        "top": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 16,
+              "y": 6,
+              "colSpan": 2,
+              "rowSpan": 5
+            },
+            "metadata": {
+              "inputs": [
+                {
+                  "name": "resourceGroup",
+                  "isOptional": true
+                },
+                {
+                  "name": "id",
+                  "value": "/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/databricks-rg-wks-dtbs-fraud-9mq1l91j3fa25",
+                  "isOptional": true
+                }
+              ],
+              "type": "Extension/HubsExtension/PartType/ResourceGroupMapPinnedPart",
+              "deepLink": "#@brendasclauserhotmail.onmicrosoft.com/resource/subscriptions/14123559-deac-49b3-a06f-7e2c00e90336/resourceGroups/databricks-rg-wks-dtbs-fraud-9mq1l91j3fa25/overview"
+            }
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "model": {
+        "timeRange": {
+          "value": {
+            "relative": {
+              "duration": 24,
+              "timeUnit": 1
+            }
+          },
+          "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange"
+        },
+        "filterLocale": {
+          "value": "en-us"
+        },
+        "filters": {
+          "value": {
+            "MsPortalFx_TimeRange": {
+              "model": {
+                "format": "local",
+                "granularity": "auto",
+                "relative": "1h"
+              },
+              "displayCache": {
+                "name": "Hora Local",
+                "value": "Última hora"
+              },
+              "filteredPartIds": [
+                "StartboardPart-MonitorChartPart-b42345e4-e8a9-4506-9584-afb8782b90cf",
+                "StartboardPart-MonitorChartPart-719559ff-aacd-4ad0-915a-e7084a0fc65a",
+                "StartboardPart-MonitorChartPart-719559ff-aacd-4ad0-915a-e7084a0fc424",
+                "StartboardPart-MonitorChartPart-719559ff-aacd-4ad0-915a-e7084a0fc57b",
+                "StartboardPart-MonitorChartPart-bc05d312-a787-40bf-a2c3-ade2ace07097",
+                "StartboardPart-MonitorChartPart-73f303c0-b74d-4883-8c06-eca6c505a932"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "name": "Fraud Analytics Solution",
+  "type": "Microsoft.Portal/dashboards",
+  "location": "INSERT LOCATION",
+  "tags": {
+    "hidden-title": "Fraud Analytics Solution"
+  },
+  "apiVersion": "2022-12-01-preview"
+}
