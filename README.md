@@ -168,13 +168,15 @@ Como sugestão de painel para identificação de rápida de eventos e usuários 
 ### _Monitoramento_
 
 Como estratégia de monitoramento da solução, adotou-se a utilização do Azure Monitor com a construção de um painel para monitoramento do processo de ingestão de dados no tópico e processo de leitura e persistência dos dados na camada `Bronze`, ilustrado na Figura 10 e 
-arquivo para importação e replicação disponível no [json]().
+arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
 
 <p align="center">
-  <img src="Editaveis/analitico-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/monitoramento.jpeg.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 10: Dashboard de monitoração da solução</em>
 </p>
+
+O dash fornece algumas informações básicas para detectar possíveis problemas ao realizar ingestão de dados, ou gargalos na pipeline de dados, para realizar *troubleshooting* basta clicar no recurso no lado direito do painel e investigar as métricas e logs do mesmo mais a fundo, para as métricas do spark é importante acessar também as métricas e logs do cluster para entender onde surge a causa raíz de um posível problema.
 
 ## IV. Melhorias e Considerações finais
 
