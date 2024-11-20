@@ -133,7 +133,7 @@ Por fim, para geração de um dado altamente agregado e com informações que fa
   <em>Figura 5: Job de transformação de dados para geração de uma camada Gold com valor para o negócio</em>
 </p>
 
-Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em regras simples como quantidade de acessos realizados, dispositivos habilitados para transações, quantas senhas diferentes forma tentadas e localizações onde o acesso foi realizado em um mesmo dia, amostra da tabelas gerada é ilsutrada na Figura 6, entretanto, é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomalias como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
+Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em regras simples como quantidade de acessos realizados, dispositivos habilitados para transações, quantas senhas diferentes forma tentadas e localizações onde o acesso foi realizado em um mesmo dia, amostra da tabelas gerada é ilsutrada na Figura 6.
 
 <p align="center">
   <img src="Editaveis/goldtable.png" alt="Arquitetura Técnica" width="1100">
@@ -172,8 +172,10 @@ Como sugestão de painel para identificação de rápida de eventos e usuários 
 
 ## IV. Melhorias e Considerações finais
 
+falar sobre políticas dos clusters
+falar de workflow em prd
+é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomalias como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
 - OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
-
 
 #### Provisionando a infraestrutura
 1 - Abrir terminal Bash da Azure e Clonar o repositório executando o comando a seguir
