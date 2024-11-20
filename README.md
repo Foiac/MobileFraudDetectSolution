@@ -23,7 +23,7 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 Existem diversas estratégias para mitigar e resolver problemas de tentativas de fraude em sistemas Mobile e Web, desde estratégias de conscientização dos usuários a soluções Anti-Bot, onde para escolher e avaliar a estratégia mais assertiva é importante que os setores de riscos e fraudes consigam identificar e entender quais as principais carateríticas do perigo eminente. A coleta e avaliação de logs de aplicação como ilustrado na Figura 1 com soluções de monitoramento ou dados auxilia o profissional de fraudes neste fluxo de escolha de estratégias de proteção e melhoria.
 
 <p align="center">
-  <img src="Editaveis/mobile-fraud-detect-funct.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/mobile-fraud-detect-funct.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 1: Arquitetura funcional de ingestão e transformação de dados para tomada de decisão</em>
 </p>
@@ -31,7 +31,7 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
   A Figura 2 apresenta a arquitetura técnica de funcionamento para ingestão e transformação de dados coletados de uma sistema de login para aplicativos móveis.
 
 <p align="center">
-  <img src="Editaveis/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 2: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
@@ -102,7 +102,7 @@ Todo o desenvolvimento deste trabalho se concentra na solução de ingestão e t
 Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, como apresentado na Figura 3, a solução streaming realiza um fluxo de leitura do Eventhub utilizando o pacote [`azure-event-hubs-spark`](https://github.com/Azure/azure-event-hubs-spark) que simplifica a conexão do Spark com o eventhub, sendo necessário a instalação do pacote no cluster provisionado no Databricks. Uma das desvantagens da utilização desse conector é que não há suporte para processo de autorização das mensagens com AAD através da SPN de forma simples, a documentação apresenta uma forma de realizar a autenticação via AAD com uma adaptação através da criação de uma classe de callback desenvolvida em Scala, para mais detalhes seguir o [link](https://github.com/Azure/azure-event-hubs-spark/blob/master/docs/use-aad-authentication-to-connect-eventhubs.md), mas para simplificar o case e reduzir o desenvolvimento a somente uma linguagem de programação, optou-se pela autorização através de *Connection String* do eventhub armazenado no AKV, sincronizando o segredo com o *Scope* do Databricks.
 
 <p align="center">
-  <img src="Editaveis/eventhubstreamingingestion.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/eventhubstreamingingestion.png" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
 </p>
@@ -116,7 +116,7 @@ Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Str
 O processo de criação da tabela `Silver`, apresentado na Figura 4, consiste na normalização dos dados ingeridos para evitar possíveis problemas de geração ou ingestão dos dados que possam trazer problemas durante a análise, garantindo integridade dos mesmos. Outro ponto tratado nos dados da camada `Bronze` está na conversão das informações de cúmulo técnico em informações funcionais, como o objetivo final é gerar insumo para um analista de fraudes que está mais preocupado com os padrões de comportamento que possam ser um indício de risco, converte-se os dados das colunas de erro, api e endpoint em informações mais simples para o entendimento de perfis menos técnicos.
 
 <p align="center">
-  <img src="Editaveis/silverjobtransformer.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/silverjobtransformer.png" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 4: Job de transformação de dados para geração de uma camada Silver</em>
 </p>
@@ -128,7 +128,7 @@ O job de transformação dos dados para uma camada `Silver` foi desenvolvido pen
 Por fim, para geração de um dado altamente agregado e com informações que facilitam a detecção de fraudes optou-se por um método de *Feature Engineering* para criação da tabela `Gold` (Figura 5), que para esta solução consiste na criação de uma tabela com colunas para agregação por usuário de: quantidade tentativas de acesso, acessos com sucesso, número de dispositivos utilizados, quantas redes foram utilizadas, contagem de senhas utilizadas, número de dispositivos habilitados para transação, quantidade distinta de versões de aplicativo utilizadas, total de localizações distintas e com uma coluna que indica uma *flag* de risco de fraude. 
 
 <p align="center">
-  <img src="Editaveis/goldjobtransformer.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/goldjobtransformer.png" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 5: Job de transformação de dados para geração de uma camada Gold com valor para o negócio</em>
 </p>
@@ -136,7 +136,7 @@ Por fim, para geração de um dado altamente agregado e com informações que fa
 Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em regras simples como quantidade de acessos realizados, dispositivos habilitados para transações, quantas senhas diferentes forma tentadas e localizações onde o acesso foi realizado em um mesmo dia, amostra da tabelas gerada é ilsutrada na Figura 6.
 
 <p align="center">
-  <img src="Editaveis/goldtable.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/goldtable.png" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 6: Amostra da tabela Gold agregada por usuário com números quantitativos dos acessos do usuário no dia</em>
 </p>
@@ -148,19 +148,19 @@ Mais detalhes sobre o processo de criação da tabela Gold, é possível verific
 Como sugestão de painel para identificação de rápida de eventos e usuários com riscos de fraudes foi construido o relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`* está disponível no [link](). Para conseguir realizar a conexão com o Azure databricks é necessário configurar o conector no Power BI inserindo o *Access Token* gerado e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
 
 <p align="center">
-  <img src="Editaveis/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 7: Home do painel com informações de apresentação e descrição das métricas</em>
 </p>
 
 <p align="center">
-  <img src="Editaveis/indicadores-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/indicadores-dash.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 8: Tela de indicadores</em>
 </p>
 
 <p align="center">
-  <img src="Editaveis/analitico-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/analitico-dash.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 9: Analítico para avaliação de eventos por usuário</em>
 </p>
@@ -168,10 +168,10 @@ Como sugestão de painel para identificação de rápida de eventos e usuários 
 ### _Monitoramento_
 
 Como estratégia de monitoramento da solução, adotou-se a utilização do Azure Monitor com a construção de um painel para monitoramento do processo de ingestão de dados no tópico e processo de leitura e persistência dos dados na camada `Bronze`, ilustrado na Figura 10 e 
-arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
+arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Monitoramento/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
 
 <p align="center">
-  <img src="Editaveis/monitoramento.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/monitoramento.jpeg" alt="Arquitetura Técnica" width="1100">
   <br>
   <em>Figura 10: Dashboard de monitoração da solução</em>
 </p>
