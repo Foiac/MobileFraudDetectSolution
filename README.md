@@ -99,7 +99,7 @@ Para o cluster foi utilizado a versão Databricks Runtime [13.3](https://learn.m
 
 Todo o desenvolvimento deste trabalho se concentra na solução de ingestão e transformação de dados, abordando e utilizando técnicas de Engenharia de Dados, assim, o desenvolvimento da ingestão de dados no Eventhub foi implementado através de um notebook python que mocka os dados e realiza o envio dos dados para o broker de mensageria através do protocolo AMQP, utilizando uma Service Principal com *role* apenas de envio de dados, onde o notebook desenvolvido para esta solução é encontrado seguindo o [link](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/0%20-%20mockData/generateMockData.ipynb). O processo de envio dos dados para o tópico do eventhub é possível através da utilização dos pacotes [`azure-identity`](https://learn.microsoft.com/en-us/python/api/overview/azure/identity-readme?view=azure-python) para autorizar o componente através da *SPN* spn-prdcr e [`azure-eventhub`](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-python-get-started-send?tabs=passwordless%2Croles-azure-portal) para realização de comunicação com o recurso, permitindo envio das informações utilizando *batches* de eventos produzidos pelo componente Python.
 
-Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, como apresentado na Figura 3, a solução streaming realiza um fluxo de leitura do Eventhub utilizando o pacote [`azure-event-hubs-spark`](https://github.com/Azure/azure-event-hubs-spark) que simplifica a conexão do Spark com o eventhub, sendo necessário a instalação do pacote no cluster provisionado no Databricks. Uma das desvantagens da utilização desse conector é que não há suporte para processo de autorização das mensagens com AAD através da SPN de forma simples, a documentação apresenta uma forma de realizar a autenticação via AAD com uma adaptação através da criação de uma classe de callback desenvolvida em Scala, para mais detalhes seguir o [link](https://github.com/Azure/azure-event-hubs-spark/blob/master/docs/use-aad-authentication-to-connect-eventhubs.md), mas para simplificar o case e reduzir o desenvolvimento a somente uma linguagem de programação, optou-se pela autorização através de *Connection String* do eventhub armazenado no AKV e sincronizada com o *Scope* do Databricks.
+Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, como apresentado na Figura 3, a solução streaming realiza um fluxo de leitura do Eventhub utilizando o pacote [`azure-event-hubs-spark`](https://github.com/Azure/azure-event-hubs-spark) que simplifica a conexão do Spark com o eventhub, sendo necessário a instalação do pacote no cluster provisionado no Databricks. Uma das desvantagens da utilização desse conector é que não há suporte para processo de autorização das mensagens com AAD através da SPN de forma simples, a documentação apresenta uma forma de realizar a autenticação via AAD com uma adaptação através da criação de uma classe de callback desenvolvida em Scala, para mais detalhes seguir o [link](https://github.com/Azure/azure-event-hubs-spark/blob/master/docs/use-aad-authentication-to-connect-eventhubs.md), mas para simplificar o case e reduzir o desenvolvimento a somente uma linguagem de programação, optou-se pela autorização através de *Connection String* do eventhub armazenado no AKV, sincronizando o segredo com o *Scope* do Databricks.
 
 <p align="center">
   <img src="Editaveis/eventhubstreamingingestion.png" alt="Arquitetura Técnica" width="1100">
@@ -165,10 +165,16 @@ Como sugestão de painel para identificação de rápida de eventos e usuários 
   <em>Figura 9: Analítico para avaliação de eventos por usuário</em>
 </p>
 
-
 ### _Monitoramento_
 
-- falar como os dados estão organizados no data lake e qual foi a estratégia de particionamento
+Como estratégia de monitoramento da solução, adotou-se a utilização do Azure Monitor com a construção de um painel para monitoramento do processo de ingestão de dados no tópico e processo de leitura e persistência dos dados na camada `Bronze`, ilustrado na Figura 10 e 
+arquivo para importação e replicação disponível no [json]().
+
+<p align="center">
+  <img src="Editaveis/analitico-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <br>
+  <em>Figura 10: Dashboard de monitoração da solução</em>
+</p>
 
 ## IV. Melhorias e Considerações finais
 
@@ -177,23 +183,3 @@ falar de workflow em prd
 é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomalias como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
 - OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
 
-#### Provisionando a infraestrutura
-1 - Abrir terminal Bash da Azure e Clonar o repositório executando o comando a seguir
-
-```bash
-git clone https://github.com/Foiac/MobileFraudDetectSolution.git
-```
-
-2 - Dar permissão e executar o arquivo script.sh no diretório MobileFraudDetectSolution/Infraestrutura
-
-```bash
-# Give permission to execute .sh and run script.sh to create resource group and resources
-chmod +x MobileFraudDetectSolution/Infraestrutura/script.sh
-MobileFraudDetectSolution/Infraestrutura/script.sh
-```
-
-```bash
-# Give permission to execute .sh # Run dbscript.sh to create databricks databricks cluster
-chmod +x MobileFraudDetectSolution/Infraestrutura/databricks/cluster/dbscript.sh
-MobileFraudDetectSolution/Infraestrutura/databricks/cluster/dbscript.sh
-```
