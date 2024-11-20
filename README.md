@@ -93,7 +93,7 @@ Como descrito na seção de arquitetura, é necessário a criação de um cluste
 
 Como nas configurações do spark é referenciado uma variável para consumo da secret do Scope do datrabricks, é necessário realizar cerimônia de senha para inserir a secret da *Service Principal* criada no AKV e sincronizar o mesmo com o scope criado no Databricks. O processo de criação e sincronização pode ser consultado na [documentação da Azure](https://learn.microsoft.com/pt-br/azure/databricks/security/secrets/secret-scopes).
 
-Para o cluster foi utilizado a versão Databricks Runtime 13.3 que conta com a versão [3.4.1](https://learn.microsoft.com/pt-br/azure/databricks/release-notes/runtime/13.3lts) do Apache Spark sendo uma versão robusta e estável.
+Para o cluster foi utilizado a versão Databricks Runtime [13.3](https://learn.microsoft.com/pt-br/azure/databricks/release-notes/runtime/13.3lts) que conta com a versão 3.4.1 do Apache Spark sendo uma versão robusta e estável.
 
 ### _Ingestão `Bronze`_
 
@@ -133,7 +133,7 @@ Por fim, para geração de um dado altamente agregado e com informações que fa
   <em>Figura 5: Job de transformação de dados para geração de uma camada Gold com valor para o negócio</em>
 </p>
 
-Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em regras simples como quantidade de acessos realizados, dispositivos habilitados para transações, quantas senhas diferentes forma tentadas e localizações onde o acesso foi realizado em um mesmo dia, amostra da tabelas gerada é ilsutrada na Figura 6, entretanto, é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomaliaas como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
+Para a geração do indicador de risco, com intuíto demonstrativo, baseou-se em regras simples como quantidade de acessos realizados, dispositivos habilitados para transações, quantas senhas diferentes forma tentadas e localizações onde o acesso foi realizado em um mesmo dia, amostra da tabelas gerada é ilsutrada na Figura 6, entretanto, é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomalias como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
 
 <p align="center">
   <img src="Editaveis/goldtable.png" alt="Arquitetura Técnica" width="1100">
