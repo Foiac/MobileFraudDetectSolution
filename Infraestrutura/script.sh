@@ -1,6 +1,6 @@
 # Variables
 
-SUBSCRIPTION_ID="14123559-deac-49b3-a06f-7e2c00e90336"
+SUBSCRIPTION_ID=""
 RESOURCE_GROUP="rg-fraud"
 REGION="westus"
 EVENTHUB_NAMESPACE_NAME="fraud-eh-namespace"
@@ -8,8 +8,7 @@ SKU_TYPE="Basic"
 EVENTHUB_NAME="fraud-detect"
 POLICIE_NAME="listener-eh-policie"
 KV_NAME="kv-fraud" # Change this name to replicate this solution
-ASSIGNE_ID="brendasclauser_hotmail.com#EXT#@brendasclauserhotmail.onmicrosoft.com"
-SECRET_NAME="eh-cs-secret"
+ASSIGNE_ID=""
 STORAGE_ACCOUNT_NAME="stacmfraud" # Change this name to replicate this solution
 CONTAINER_NAME="cont-fraud" 
 WORKSPACE_NAME="wks-dtbs-fraud"
@@ -36,11 +35,6 @@ echo "Create Azure Key Vault: " $KV_NAME
 az keyvault recover --name $KV_NAME
 az role assignment create --assignee $ASSIGNE_ID --role "Key Vault Administrator" --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$KV_NAME
 
-# Storage Connection String on Key Vault
-echo "Storage Connection String on Key Vault"
-CONNECTION_STRING=$(az eventhubs namespace authorization-rule keys list --resource-group $RESOURCE_GROUP --namespace-name $EVENTHUB_NAMESPACE_NAME --name $POLICIE_NAME --query primaryConnectionString --output tsv)
-az keyvault secret set --vault-name $KV_NAME --name $SECRET_NAME --value $CONNECTION_STRING
-
 # Create Storage Account on Azure and create container on ADLS
 echo "Create Storage Account on Azure and create container on ADLS"
 az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP --location $REGION --sku Standard_LRS --kind StorageV2 --enable-hierarchical-namespace true --default-action Allow
@@ -55,7 +49,3 @@ az storage fs directory create --account-name $STORAGE_ACCOUNT_NAME --file-syste
 # Create databricks workspace
 echo "Create databricks workspace"
 az databricks workspace create --resource-group $RESOURCE_GROUP --name $WORKSPACE_NAME --location $REGION --sku premium 
-
-# Install databricks CLI
-echo "Install databricks CLI"
-pip install databricks-cli
