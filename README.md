@@ -28,7 +28,19 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
   <em>Figura 1: Arquitetura funcional de ingestão e transformação de dados para tomada de decisão</em>
 </p>
 
-  A Figura 2 apresenta a arquitetura técnica de funcionamento para ingestão e transformação de dados coletados de uma sistema de login para aplicativos móveis.
+A Figura 2 apresenta a arquitetura técnica de ingestão e transformação de dados coletados de um sistema de login de aplicativos móveis, implementada como uma solução de Data Lakehouse na Azure, organizada de acordo com os princípios da arquitetura medalhão.
+
+'Data Lakehou e Arquitetura Medalhão'
+
+O conceito de Data Lakehouse combina a escalabilidade e flexibilidade de um Data Lake com a estrutura e o desempenho de um Data Warehouse, permitindo o armazenamento de grandes volumes de dados em seu formato bruto, enquanto oferece suporte a consultas analíticas otimizadas diretamente sobre os dados.
+
+A arquitetura medalhão organiza o pipeline em camadas lógicas:
+
+-Bronze: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
+-Silver: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
+-Gold: Representa a camada mais refinada, com dados transformados e prontos para análise avançada, como a detecção de tentativas de fraude em logins.
+
+Essa abordagem melhora a governança, otimiza o desempenho das consultas e possibilita o uso de ferramentas avançadas de big data, como Apache Spark e Databricks, para atender a requisitos analíticos.
 
 <p align="center">
   <img src="Editaveis/Imagens/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
@@ -36,26 +48,30 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
   <em>Figura 2: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
 
-O Azure Event Hub é uma plataforma de processamento de eventos em tempo real e ingestão de dados altamente escalável, ideal para coletar e processar grandes volumes de dados provenientes de dispositivos IoT, logs de aplicativos ou outros sistemas. Ele atua como um event broker que permite a ingestão e retenção de mensagens, disponibilizando-as para consumidores em tempo quase real ou com processamento em lotes.
+Essa arquitetura consiste nos seguintes componentes:
+
+O [Azure Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about) é uma plataforma de processamento de eventos em tempo real e ingestão de dados altamente escalável, ideal para coletar e processar grandes volumes de dados provenientes de dispositivos IoT, logs de aplicativos ou outros sistemas. Ele atua como um event broker que permite a ingestão e retenção de mensagens, disponibilizando-as para consumidores em tempo quase real ou com processamento em lotes.
 
 Para este caso, optou-se pelo uso do Event Hub com o SKU Basic, pois oferece o menor custo entre os planos disponíveis. No entanto, o SKU Basic possui algumas limitações importantes, como a ausência do recurso Capture, que facilita a gravação automática dos eventos em um armazenamento para processamento posterior, e um período de retenção limitado a um dia. Diante disso, para garantir que nenhuma mensagem seja perdida devido ao intervalo curto de retenção, foi adotada uma solução baseada no Spark Streaming. Essa abordagem possibilita a leitura contínua dos eventos do Event Hub e a gravação dos dados diretamente na camada Bronze do data lake, permitindo que o pipeline de ingestão seja confiável e resiliente a perdas.
 
-Na camada de processamento, o Databricks é utilizado para realizar a ingestão e transformação dos dados, garantindo três pilares essenciais:
+O [Azure Databricks](https://learn.microsoft.com/en-us/azure/databricks/introduction/) é uma plataforma unificada de análise e ciência de dados baseada em Apache Spark, projetada para simplificar o processamento de dados em larga escala, aprendizado de máquina e engenharia de dados. Ele combina recursos de processamento distribuído com um ambiente colaborativo, permitindo que equipes de dados desenvolvam, testem e escalem pipelines de maneira eficiente.
 
-- Segurança: Ideal para lidar com dados sensíveis de usuários, oferecendo integração com serviços como o Azure Key Vault para gerenciamento seguro de credenciais.
-- Escalabilidade: Permite atender milhares de usuários de forma eficiente, ajustando os recursos computacionais conforme a demanda, especialmente em momentos de alta sazonalidade.
-- Eficiência: Oferece recursos avançados como Adaptive Query Execution (AQE), que ajusta planos de execução dinamicamente; Optimization, que reduz latências e melhora o desempenho de consultas; e Z-Order, que organiza os dados para acessos mais rápidos, reduzindo custos operacionais.
+Neste projeto, o Databricks é a ferramente utilzada na camada de processamento, realizando ingestão e transformação de dados, garantindo três pilares fundamentais:
 
-Um recurso fundamental para segurança no Databricks é o scope de segredos. Trata-se de uma funcionalidade que permite criar áreas seguras dentro do workspace para armazenar credenciais, como chaves, senhas ou tokens. Com isso, as aplicações podem acessar esses segredos sem expor valores sensíveis no código, garantindo conformidade com boas práticas de segurança e reduzindo riscos de vazamento. A integração com o Azure Key Vault automatiza a sincronização desses segredos, facilitando a gestão e aumentando a segurança geral do pipeline. A integração com o *AKV* só é possível com o Workspace Premium do Databricks.
+- Segurança: A plataforma oferece integração nativa com ferramentas como o Azure Key Vault para gerenciamento seguro de credenciais e suporte a políticas de segurança que protegem dados sensíveis de usuários.
+- Escalabilidade: Projetado para lidar com grandes volumes de dados, ele ajusta automaticamente os recursos computacionais para atender a demandas variáveis, como os picos de uso comuns em aplicativos financeiros ou transacionais.
+- Eficiência: Com recursos como Adaptive Query Execution (AQE), que otimiza os planos de execução dinamicamente; Optimization, que reduz latências; e Z-Order, que organiza dados para acessos mais rápidos, o Databricks ajuda a otimizar custos e melhorar o desempenho de consultas em grande escala.
 
-O Azure Key Vault será utilizado como o repositório seguro de todas as secrets, como credenciais de Service Principals (SPNs). Essa ferramenta é essencial para armazenar chaves, tokens e senhas, permitindo que componentes do pipeline, como scripts de ingestão em Python e jobs Spark, acessem essas informações de forma segura. Isso reduz riscos de vazamento e reforça as práticas de segurança em conformidade com as políticas corporativas.
+Um recurso essencial para segurança no Databricks é o scope de segredos, que permite criar áreas seguras no workspace para armazenar credenciais como chaves, senhas ou tokens. Essa funcionalidade elimina a necessidade de expor informações sensíveis no código, garantindo conformidade com as melhores práticas de segurança. Além disso, a integração com o Azure Key Vault automatiza a sincronização e o gerenciamento desses segredos, oferecendo um nível adicional de proteção.
 
-Para o processamento dos dados, as instâncias escolhidas para o Driver e Workers foram do tipo Standard_D4s_v3, que oferecem um bom equilíbrio entre desempenho e custo. Essas máquinas são otimizadas para cargas de trabalho gerais, oferecendo 4 vCPUs, 16 GB de RAM e um custo de 2,25 DBU/h, tornando-as ideais para clusters que executam tanto ingestão quanto transformação de dados no mesmo ambiente.
+Para armazenamento, foi adotado o [Azure Data Lake Storage Gen2 (ADLS Gen2)](https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction), devido à sua alta capacidade e integração nativa com o Hadoop Distributed File System (HDFS), o que facilita a interação com ferramentas de big data, como Apache Spark e Databricks. O ADLS Gen2 também oferece um armazenamento hierárquico, que melhora o desempenho ao acessar grandes volumes de dados organizados em diretórios, sendo especialmente útil em arquiteturas de dados baseadas no modelo medalhão. Além disso, ele suporta criptografia de dados com chaves gerenciadas pelo cliente, reforçando a segurança e atendendo a requisitos de compliance corporativo.
 
-Para armazenamento, foi adotado o Azure Data Lake Storage Gen2 (ADLS Gen2), devido à sua alta capacidade e integração nativa com o Hadoop Distributed File System (HDFS), o que facilita a interação com ferramentas de big data, como Apache Spark e Databricks. O ADLS Gen2 também oferece um armazenamento hierárquico, que melhora o desempenho ao acessar grandes volumes de dados organizados em diretórios, sendo especialmente útil em arquiteturas de dados baseadas no modelo medalhão. Além disso, ele suporta criptografia de dados com chaves gerenciadas pelo cliente, reforçando a segurança e atendendo a requisitos de compliance corporativo.
+Afim de garantir um devido fluxo de autorização entre os componentes da solução, utilizou-se [Service Principals](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser), que são identidades seguras gerenciadas no Azure Active Directory (AAD) e utilizadas para autenticação e autorização em recursos da Azure. Essas identidades permitem que aplicativos, scripts ou automações acessem serviços do Azure com permissões específicas, sem a necessidade de usar credenciais de usuário.
 
-Por fim, como estratégia de monitoramento foi utilizado o Azure Monitor por simplicidade, por ser uma ferramenta nativa da Azure, não sendo necessário realizar grandes configurações para coletar métricas de funcionamento da solução.
- 
+Sua importância está em permitir um gerenciamento centralizado de permissões, aumentando a segurança ao evitar o uso de credenciais sensíveis diretamente no código, além de possibilitar a implementação de políticas de acesso granular entre os serviços, como o Databricks, Event Hub e o ADLS Gen2. Isso garante que cada componente tenha apenas os privilégios necessários para sua operação, reduzindo riscos e atendendo a boas práticas de segurança.
+
+Por fim, como estratégia de monitoramento foi utilizado o [Azure Monitor](https://learn.microsoft.com/pt-br/azure/azure-monitor/overview) por simplicidade, por ser uma ferramenta nativa da Azure, não sendo necessário realizar grandes configurações para coletar métricas de funcionamento da solução.
+
 ## III. Explicação sobre o case desenvolvido
 
 O processo de ingestão e transformação dos dados desta solução caracteriza uma arquitetura Lambda, já que, como explicado anteriormente a solução streaming é utilizada para garantir que não exista perca das mensagens por expiração das mesmas no eventhub, e para processamento das camadas silver e gold os jobs foram desenvolvidos para terem um fluxo batch com uma execução por dia.
