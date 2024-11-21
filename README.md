@@ -30,15 +30,15 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
 
 A Figura 2 apresenta a arquitetura técnica de ingestão e transformação de dados coletados de um sistema de login de aplicativos móveis, implementada como uma solução de Data Lakehouse na Azure, organizada de acordo com os princípios da arquitetura medalhão.
 
-'Data Lakehou e Arquitetura Medalhão'
-
+  'Data Lakehouse e Arquitetura Medalhão'
+  
 O conceito de Data Lakehouse combina a escalabilidade e flexibilidade de um Data Lake com a estrutura e o desempenho de um Data Warehouse, permitindo o armazenamento de grandes volumes de dados em seu formato bruto, enquanto oferece suporte a consultas analíticas otimizadas diretamente sobre os dados.
 
 A arquitetura medalhão organiza o pipeline em camadas lógicas:
 
--Bronze: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
--Silver: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
--Gold: Representa a camada mais refinada, com dados transformados e prontos para análise avançada, como a detecção de tentativas de fraude em logins.
+- Bronze: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
+- Silver: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
+- Gold: Representa a camada mais refinada, com dados transformados e prontos para análise avançada, como a detecção de tentativas de fraude em logins.
 
 Essa abordagem melhora a governança, otimiza o desempenho das consultas e possibilita o uso de ferramentas avançadas de big data, como Apache Spark e Databricks, para atender a requisitos analíticos.
 
