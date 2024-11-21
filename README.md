@@ -213,15 +213,9 @@ O dash fornece algumas informações básicas para detectar possíveis problemas
 
 ## IV. Melhorias e Considerações finais
 
-falar sobre implementação para transações financeiras, vale um ponto sobre prevenção a lavagem de dinheiro
-
-Na parte de melhoria e considerações finais fazer um desenho de como seria o fluxo de execução dos jobs com jobs de optimize, z-order e expurgo de dados
-
-Na parte de melhorias fazer um desenho de como seria integração em um cenário produtivo, inclusive utilizando ML container register e CI/CD
-
-
-falar sobre políticas dos clusters
-falar de workflow em prd
-é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomalias como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
-- OBS: Falar de score de risco por aparelho, aqui dá pra falar de bases da IOS e Android e também de técnicas de ML para identificar
+A solução proposta representa uma base robusta para detecção de fraudes em aplicativos móveis, demonstrando como arquiteturas Data Lakehouse podem ser aplicadas a problemas complexos. No entanto, existem diversas oportunidades para expandir e otimizar a arquitetura, elevando seu desempenho e ampliando a aplicabilidade em cenários reais de produção.
+Uma das melhorias mais relevantes seria ampliar a solução para atender a cenários de transações financeiras mais complexos, como a prevenção à lavagem de dinheiro (AML). Isso envolveria a criação de algoritmos que detectem padrões de transferências atípicas, também sendo possível o cruzamento das informações com bases de dados externas, como listas de sanções ou suspeitos. Essa abordagem permitiria não apenas identificar fraudes, mas também garantir a conformidade com regulamentações financeiras.
+Em um ambiente de produção, é fundamental orquestrar os processos de ingestão, transformação e otimização de dados de forma automatizada, utilizando ferramentas como Databricks Workflows ou Azure Data Factory para garantir consistência e eficiência. Políticas de gerenciamento de clusters no Databricks também desempenham um papel crucial, ajudando a controlar custos, reforçar a segurança e evitar configurações inadequadas que possam comprometer a operação.
+A integração de técnicas de Machine Learning pode ampliar significativamente o poder analítico da solução. Modelos como Isolation Forest, DBSCAN ou K-Means podem identificar padrões anômalos em dados de login e transações. Pipelines de CI/CD seriam indispensáveis para automatizar o provisionamento e o deployment, aumentando a agilidade na entrega de melhorias e novas funcionalidades.
+A solução apresentada não apenas demonstra um framework eficaz para detecção de fraudes, mas também destaca como arquiteturas modernas podem ser escaladas para atender demandas reais com segurança, resiliência e escalabilidade
 
