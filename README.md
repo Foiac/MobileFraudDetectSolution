@@ -74,7 +74,7 @@ Por fim, como estratégia de monitoramento foi utilizado o [Azure Monitor](https
 
 ## III. Explicação sobre o case desenvolvido
 
-O processo de ingestão e transformação de dados nesta solução segue os princípios da arquitetura Lambda. Como explicado anteriormente, a utilização de uma solução streaming é essencial para evitar a perda de mensagens por expiração no Event Hub. Já as camadas Silver e Gold são processadas em fluxos batch, com jobs configurados para execução diária, garantindo o balanceamento entre processamento em tempo real e análises mais refinadas.
+Como explicado anteriormente, a utilização de uma solução streaming é essencial para evitar a perda de mensagens por expiração no Event Hub. Já as camadas Silver e Gold são processadas em fluxos batch, com jobs configurados para execução diária, garantindo o balanceamento entre processamento em tempo real e análises mais refinadas.
 
 Para replicar a infraestrutura desta solução, é necessário possuir uma assinatura no provedor de cloud Azure, além de criar um grupo de recursos e provisionar os seguintes serviços:
 
