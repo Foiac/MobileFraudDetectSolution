@@ -213,6 +213,11 @@ O dash fornece algumas informações básicas para detectar possíveis problemas
 
 ## IV. Melhorias e Considerações finais
 
+Na parte de melhoria e considerações finais fazer um desenho de como seria o fluxo de execução dos jobs com jobs de optimize, z-order e expurgo de dados
+
+Na parte de melhorias fazer um desenho de como seria integração em um cenário produtivo, inclusive utilizando ML container register e CI/CD
+
+
 falar sobre políticas dos clusters
 falar de workflow em prd
 é possível aplicar técnicas de *Machine Learning* com modelos de detecção de anomalias como *Isolation Forest* ou *Clustering* para identificar usuários onde o padrão de utilização do aplicativo foge do comum.
