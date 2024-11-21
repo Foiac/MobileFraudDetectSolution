@@ -30,7 +30,7 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
 
 A Figura 2 apresenta a arquitetura técnica de ingestão e transformação de dados coletados de um sistema de login de aplicativos móveis, implementada como uma solução de Data Lakehouse na Azure, organizada de acordo com os princípios da arquitetura medalhão.
 
-  'Data Lakehouse e Arquitetura Medalhão'
+    'Data Lakehouse e Arquitetura Medalhão'
   
 O conceito de Data Lakehouse combina a escalabilidade e flexibilidade de um Data Lake com a estrutura e o desempenho de um Data Warehouse, permitindo o armazenamento de grandes volumes de dados em seu formato bruto, enquanto oferece suporte a consultas analíticas otimizadas diretamente sobre os dados.
 
@@ -48,7 +48,7 @@ Essa abordagem melhora a governança, otimiza o desempenho das consultas e possi
   <em>Figura 2: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
 
-Essa arquitetura consiste nos seguintes componentes:
+a arquitetura téncica apresentada consiste nos seguintes componentes:
 
 O [Azure Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about) é uma plataforma de processamento de eventos em tempo real e ingestão de dados altamente escalável, ideal para coletar e processar grandes volumes de dados provenientes de dispositivos IoT, logs de aplicativos ou outros sistemas. Ele atua como um event broker que permite a ingestão e retenção de mensagens, disponibilizando-as para consumidores em tempo quase real ou com processamento em lotes.
 
