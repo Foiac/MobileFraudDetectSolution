@@ -30,15 +30,15 @@ Existem diversas estratégias para mitigar e resolver problemas de tentativas de
 
 A Figura 2 apresenta a arquitetura técnica de ingestão e transformação de dados coletados de um sistema de login de aplicativos móveis, implementada como uma solução de Data Lakehouse na Azure, organizada de acordo com os princípios da arquitetura medalhão.
 
-    'Data Lakehouse e Arquitetura Medalhão'
+    Data Lakehouse e Arquitetura Medalhão
   
 O conceito de Data Lakehouse combina a escalabilidade e flexibilidade de um Data Lake com a estrutura e o desempenho de um Data Warehouse, permitindo o armazenamento de grandes volumes de dados em seu formato bruto, enquanto oferece suporte a consultas analíticas otimizadas diretamente sobre os dados.
 
 A arquitetura medalhão organiza o pipeline em camadas lógicas:
 
-- Bronze: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
-- Silver: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
-- Gold: Representa a camada mais refinada, com dados transformados e prontos para análise avançada, como a detecção de tentativas de fraude em logins.
+- `Bronze`: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
+- `Silver`: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
+- `Gold`: Representa a camada mais refinada, com dados transformados e prontos para análise avançada, como a detecção de tentativas de fraude em logins.
 
 Essa abordagem melhora a governança, otimiza o desempenho das consultas e possibilita o uso de ferramentas avançadas de big data, como Apache Spark e Databricks, para atender a requisitos analíticos.
 
@@ -48,7 +48,7 @@ Essa abordagem melhora a governança, otimiza o desempenho das consultas e possi
   <em>Figura 2: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
 
-a arquitetura téncica apresentada consiste nos seguintes componentes:
+A arquitetura téncica apresentada consiste nos seguintes componentes:
 
 O [Azure Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about) é uma plataforma de processamento de eventos em tempo real e ingestão de dados altamente escalável, ideal para coletar e processar grandes volumes de dados provenientes de dispositivos IoT, logs de aplicativos ou outros sistemas. Ele atua como um event broker que permite a ingestão e retenção de mensagens, disponibilizando-as para consumidores em tempo quase real ou com processamento em lotes.
 
@@ -74,9 +74,16 @@ Por fim, como estratégia de monitoramento foi utilizado o [Azure Monitor](https
 
 ## III. Explicação sobre o case desenvolvido
 
-O processo de ingestão e transformação dos dados desta solução caracteriza uma arquitetura Lambda, já que, como explicado anteriormente a solução streaming é utilizada para garantir que não exista perca das mensagens por expiração das mesmas no eventhub, e para processamento das camadas silver e gold os jobs foram desenvolvidos para terem um fluxo batch com uma execução por dia.
+O processo de ingestão e transformação de dados nesta solução segue os princípios da arquitetura Lambda. Como explicado anteriormente, a utilização de uma solução streaming é essencial para evitar a perda de mensagens por expiração no Event Hub. Já as camadas Silver e Gold são processadas em fluxos batch, com jobs configurados para execução diária, garantindo o balanceamento entre processamento em tempo real e análises mais refinadas.
 
-Para ser possível replicar a infra deste trabalho é necessário uma assinatura do provedor de cloud Azure, um grupo de recursos e o provisionamento dos seguintes recursos: *Eventhub Namespace* básico, *Azure Key Vault* Padrão, *Storage Account* com *Namespace* hierárquico e Databricks *Workspace Premium*. Afim de facilitar o provisionamento da infraestrutura, disponibilizo aqui o [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh) para disponibilização dos recursos citados anteriormente.
+Para replicar a infraestrutura desta solução, é necessário possuir uma assinatura no provedor de cloud Azure, além de criar um grupo de recursos e provisionar os seguintes serviços:
+
+- Event Hub Namespace (SKU Básico) para ingestão de eventos;
+- Azure Key Vault (SKU Padrão) para armazenamento seguro de segredos;
+- Storage Account com namespace hierárquico habilitado, para organização dos dados no formato Data Lake;
+- Databricks Workspace Premium, que oferece suporte avançado a integrações e segurança.
+
+Para simplificar o provisionamento da infraestrutura, disponibilizo o script.sh, que automatiza a criação dos recursos mencionados.
 
 ### _Cluster Databricks e Scope_
 
