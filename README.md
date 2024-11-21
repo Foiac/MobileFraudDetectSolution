@@ -176,6 +176,8 @@ Essa abordagem é uma boa estratégia porque combina simplicidade com efetividad
 
 Mais detalhes sobre o processo de criação da tabela Gold, é possível verificar no notebook [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/4%20-%20goldBatch/dataJobUserAgg.ipynb).
 
+### _Particionamento e Jobs de Otimização_
+
 ### _Exemplo de Data Visualization_
 
 Como sugestão de painel para identificação rápida de eventos e usuários com riscos de fraudes, foi construido um relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`*  está disponível no [link](https://github.com/Foiac/MobileFraudDetectSolution/tree/main/Editaveis/PBI). Para conseguir realizar a conexão com o Azure databricks foi necessário configurar o conector no Power BI inserindo o *Access Token* gerado via Workspace do Databricks e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
@@ -217,8 +219,7 @@ A solução proposta representa uma base robusta para detecção de fraudes em a
 
 Uma das melhorias mais relevantes seria ampliar a solução para atender a cenários de transações financeiras mais complexos, como a prevenção à lavagem de dinheiro (AML). Isso envolveria a criação de algoritmos que detectem padrões de transferências atípicas, também sendo possível o cruzamento das informações com bases de dados externas, como listas de sanções ou suspeitos. Essa abordagem permitiria não apenas identificar fraudes, mas também garantir a conformidade com regulamentações financeiras.
 
-Em um ambiente de produção, é fundamental orquestrar os processos de ingestão, transformação e otimização de dados de forma automatizada, utilizando ferramentas como Databricks Workflows ou Azure Data Factory para garantir consistência e eficiência. Políticas de gerenciamento de clusters no Databricks também desempenham um papel crucial, ajudando a controlar custos, reforçar a segurança e evitar configurações inadequadas que possam comprometer a operação.
+Outra evolução seria a integração de técnicas de Machine Learning para ampliar o poder analítico da solução. Modelos como Isolation Forest, DBSCAN ou K-Means podem identificar padrões anômalos em dados de login e transações. Pipelines de CI/CD seriam indispensáveis para automatizar o provisionamento e o deployment, aumentando a agilidade na entrega de melhorias e novas funcionalidades.
 
-A integração de técnicas de Machine Learning pode ampliar significativamente o poder analítico da solução. Modelos como Isolation Forest, DBSCAN ou K-Means podem identificar padrões anômalos em dados de login e transações. Pipelines de CI/CD seriam indispensáveis para automatizar o provisionamento e o deployment, aumentando a agilidade na entrega de melhorias e novas funcionalidades.
+Por fim, para rodar a solução em um ambiente produtivo, é fundamental orquestrar os processos de ingestão, transformação e otimização de dados de forma automatizada, utilizando ferramentas como Databricks Workflows ou Azure Data Factory para garantir consistência e eficiência. Políticas de gerenciamento de clusters no Databricks também desempenham um papel crucial, ajudando a controlar custos, reforçar a segurança e evitar configurações inadequadas que possam comprometer a operação.
 
-A solução apresentada não apenas demonstra um framework eficaz para detecção de fraudes, mas também destaca como arquiteturas modernas podem ser escaladas para atender demandas reais com segurança, resiliência e escalabilidade
