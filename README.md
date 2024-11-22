@@ -34,7 +34,7 @@ A Figura 2 apresenta a arquitetura técnica de ingestão e transformação de da
   
 O conceito de Data Lakehouse combina a escalabilidade e flexibilidade de um Data Lake com a estrutura e o desempenho de um Data Warehouse, permitindo o armazenamento de grandes volumes de dados em seu formato bruto, enquanto oferece suporte a consultas analíticas otimizadas diretamente sobre os dados.
 
-A arquitetura medalhão organiza o pipeline em camadas lógicas:
+A [arquitetura medalhão](https://learn.microsoft.com/pt-br/azure/databricks/lakehouse/medallion) organiza o pipeline em camadas lógicas:
 
 - `Bronze`: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
 - `Silver`: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
