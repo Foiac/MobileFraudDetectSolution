@@ -176,7 +176,11 @@ Essa abordagem é uma boa estratégia porque combina simplicidade com efetividad
 
 Mais detalhes sobre o processo de criação da tabela Gold, é possível verificar no notebook [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/4%20-%20goldBatch/dataJobUserAgg.ipynb).
 
-### _Particionamento e Jobs de Otimização_
+### _Particionamento e Otimização_
+
+O particionamento de tabelas no Databricks é uma técnica essencial para melhorar o desempenho de leitura e gestão de grandes volumes de dados. Ao particionar uma tabela, os dados são divididos em subpastas baseadas em uma ou mais colunas, como datas ou localizações, o que permite que apenas as partições relevantes sejam lidas durante as consultas, otimizando a performance. No entanto, de acordo com a [documentação](https://docs.databricks.com/pt/tables/partitions.html) da Databricks é recomendado evitar o particionamento de tabelas menores que 1TB, pois o custo de gerenciamento de muitas partições pequenas pode superar os benefícios de desempenho. Por essa razão, nesta solução, o particionamento não foi utilizado, pois o tamanho das partições depende diretamente do TPS (Transações Por Segundo) da solução de login do aplicativo, que pode não justificar o particionamento com o tamanho atual dos dados.
+
+`falar sobre o optimize aqui e referenciar o job que foi feito`
 
 ### _Exemplo de Data Visualization_
 
