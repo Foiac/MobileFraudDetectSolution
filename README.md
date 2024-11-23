@@ -8,11 +8,11 @@ No contexto de um aplicativo de transações financeiras, como o desenvolvido ne
 
 Os padrões de comportamento são cruciais para detectar account takeover. Entre os sinais de alerta estão:
 
-•	Logins repetidos a partir de múltiplos dispositivos desconhecidos.
-•	Alterações frequentes de localizações geográficas.
-•	Uso de dispositivos diferentes do habitual para um CPF específico.
-•	Discrepâncias entre a versão do sistema operacional ou da aplicação usada nos logins.
-•	Várias tentativas de login malsucedidas em curto intervalo de tempo.
+-	Logins repetidos a partir de múltiplos dispositivos desconhecidos.
+-	Alterações frequentes de localizações geográficas.
+-	Uso de dispositivos diferentes do habitual para um CPF específico.
+-	Discrepâncias entre a versão do sistema operacional ou da aplicação usada nos logins.
+-	Várias tentativas de login malsucedidas em curto intervalo de tempo.
 
 A solução proposta neste case utiliza um fluxo robusto de ingestão de dados em tempo real, onde informações de login e do aparelho são enviados para um data lake na cloud, estas podem alimentar times de prevenção e detecção de fraudes. Com posse desses dados, é possível identificar padrões e comportamentos suspeitos em dados históricos para retiradas de insights que podem expor tentativas de fraude e também servir para processos de auditoria de possíveis casos de ATO com sucesso.
 
