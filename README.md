@@ -182,7 +182,7 @@ O particionamento de tabelas no Databricks é uma técnica essencial para melhor
 
 Sem o particionamento da tabela, comando [`OPTIMIZE`](https://learn.microsoft.com/pt-br/azure/databricks/sql/language-manual/delta-optimize) no Databricks é utilizado para melhorar o desempenho de leitura de uma tabela Delta, realizando a compactação de arquivos pequenos em partições maiores. Isso é especialmente útil quando você tem uma tabela com muitas partições ou arquivos pequenos, o que pode gerar overhead durante a leitura dos dados. O `OPTIMIZE` reorganiza fisicamente os dados, reduzindo o número de arquivos e aumentando a eficiência das consultas subsequentes. Para este case, foi desenvolvido dois jobs para otimização dos arquivos parquets gerados em cada tabela, podendo ser verificado nos notebooks [optimizeSilverDeltaTable.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/3%20-%20optimize/optimizeSilverDeltaTable.ipynb) e [optimizeGoldDeltaTable.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/3%20-%20optimize/optimizeGoldDeltaTable.ipynb).
 
-escrever aqui sobre lógica de expurgo da tabela bronze
+Como não há particionamento da tabela, além da utilização de comando como `OPTIMIZE` para reorganizar fisicamente os dados, também é importante garantir uma lógica de expurgo de todas as camadas de acordo com a necessidade de negócio. Essa lógica pode ser realizada com a construção de jobs de expurgo com base em um filtro de data, por exemplo, essa estratégiaa evita o crescimento desordenado da utilização de recurso de armazenamento e processamento, o que pode causar gargalos na pipeline, e um aumento significativo do custo.
 
 ### _Exemplo de Data Visualization_
 
