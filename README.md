@@ -20,7 +20,7 @@ Desta forma, este trabalho tem como objetivo implementar um case prático de col
 
 ## II. Arquitetura de Solução e Arquitetura Técnica
 
-Existem diversas estratégias para mitigar e resolver problemas de tentativas de fraude em sistemas Mobile e Web, desde estratégias de conscientização dos usuários a soluções Anti-Bot, onde para escolher e avaliar a estratégia mais assertiva é importante que os setores de riscos e fraudes consigam identificar e entender quais as principais carateríticas do perigo eminente. A coleta e avaliação de logs de aplicação, como ilustrado na Figura 1, com soluções de dados-auxilia o profissional de fraudes neste fluxo de escolha de estratégias de proteção e melhoria.
+Existem diversas estratégias para mitigar e resolver problemas de tentativas de fraude em sistemas Mobile e Web, desde estratégias de conscientização dos usuários a soluções Anti-Bot, onde para escolher e avaliar a estratégia mais assertiva é importante que os setores de riscos e fraudes consigam identificar e entender quais as principais características do perigo eminente. A coleta e avaliação de logs de aplicação, como ilustrado na Figura 1, com soluções de dados-auxilia o profissional de fraudes neste fluxo de escolha de estratégias de proteção e melhoria.
 
 <p align="center">
   <img src="Editaveis/Imagens/mobile-fraud-detect-funct.jpeg" alt="Arquitetura Técnica" width="1100">
@@ -48,7 +48,7 @@ Essa abordagem melhora a governança, otimiza o desempenho das consultas e possi
   <em>Figura 2: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
 </p>
 
-A arquitetura téncica apresentada consiste nos seguintes componentes:
+A arquitetura técnica apresentada consiste nos seguintes componentes:
 
 O [Azure Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about) é uma plataforma de processamento de eventos em tempo real e ingestão de dados altamente escalável, ideal para coletar e processar grandes volumes de dados provenientes de dispositivos IoT, logs de aplicativos ou outros sistemas. Ele atua como um event broker que permite a ingestão e retenção de mensagens, disponibilizando-as para consumidores em tempo quase real ou com processamento em lotes.
 
@@ -56,7 +56,7 @@ Para este caso, optou-se pelo uso do Event Hub com o SKU Basic, pois oferece o m
 
 O [Azure Databricks](https://learn.microsoft.com/en-us/azure/databricks/introduction/) é uma plataforma unificada de análise e ciência de dados baseada em Apache Spark, projetada para simplificar o processamento de dados em larga escala, aprendizado de máquina e engenharia de dados. Ele combina recursos de processamento distribuído com um ambiente colaborativo, permitindo que equipes de dados desenvolvam, testem e escalem pipelines de maneira eficiente.
 
-Neste projeto, o Databricks é a ferramente utilzada na camada de processamento, realizando ingestão e transformação de dados, garantindo três pilares fundamentais:
+Neste projeto, o Databricks é a ferramenta utilizada na camada de processamento, realizando ingestão e transformação de dados, garantindo três pilares fundamentais:
 
 - Segurança: A plataforma oferece integração nativa com ferramentas como o Azure Key Vault para gerenciamento seguro de credenciais e suporte a políticas de segurança que protegem dados sensíveis de usuários.
 - Escalabilidade: Projetado para lidar com grandes volumes de dados, ele ajusta automaticamente os recursos computacionais para atender a demandas variáveis, como os picos de uso comuns em aplicativos financeiros ou transacionais.
@@ -136,7 +136,7 @@ Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, com
   <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
 </p>
 
-Para garantir segurança sobre os dados sensíveis foi utilizado uma estratégia de anonimização da informação no momento da ingestão na camada `Bronze`, criou-se um hash com SHA-256 nas informações de IMEI, MAC, CPF e Senha de usuário concatenando estas com uma palavra chave armazenado no *Scope* do Databricks e resgatada em tempo de execução.
+Para garantir segurança sobre os dados sensíveis foi utilizado uma estratégia de anonimização da informação no momento da ingestão na camada `Bronze`, criou-se um hash com SHA-256 nas informações de IMEI, MAC, CPF e Senha de usuário concatenando estas com uma palavra-chave armazenado no *Scope* do Databricks e resgatada em tempo de execução.
 
 Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Streaming uma janela de processamento de 2 minutos para criação do data frame e por consequência o arquivo parquet em uma Delta Table. É possível ter mais detalhes sobre o job de ingestão olhando o código desenvolido no notebook [dataStreamingLoad.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/1%20-%20eventhubToBronzeStreaming/dataStreamingLoad.ipynb).
 
@@ -156,7 +156,7 @@ O job de transformação dos dados para a camada `Silver` foi desenvolvido com f
 
 ### _Tabela `Gold`_
 
-Para a geração de dados altamente agregados e com informações que facilitam a detecção de fraudes, foi adotado um método de *Feature Engineering* na criação da tabela `Gold`, apresentada na Figura 5. Nessa camada, a solução envolve a criação de uma tabela com colunas específicas para agregação por usuário, incluindo métricas como: quantidade de tentativas de acesso, acessos bem-sucedidos, número de dispositivos utilizados, diversidade de redes acessadas, contagem de senhas empregadas, número de dispositivos habilitados para transações, quantidade distinta de versões de aplicativo usadas, total de localizações distintas e uma coluna de *flag*  indicando o risco de fraude. Essas variáveis agregadas permitem análises mais precisas e a identificação de padrões suspeitos que podem indicar atividades fraudulentas.
+Para a geração de dados altamente agregados e com informações que facilitam a detecção de fraudes, foi adotado um método de *Feature Engineering* na criação da tabela `Gold`, apresentada na Figura 5. Nessa camada, a solução envolve a criação de uma tabela com colunas específicas para agregação por usuário, incluindo métricas como: quantidade de tentativas de acesso, acessos bem-sucedidos, número de dispositivos utilizados, diversidade de redes acessadas, contagem de senhas empregadas, número de dispositivos habilitados para transações, quantidade distinta de versões de aplicativo usadas, total de localizações distintas e uma coluna de *flag* indicando o risco de fraude. Essas variáveis agregadas permitem análises mais precisas e a identificação de padrões suspeitos que podem indicar atividades fraudulentas.
 
 <p align="center">
   <img src="Editaveis/Imagens/goldjobtransformer.png" alt="Arquitetura Técnica" width="1100">
@@ -184,7 +184,7 @@ Sem o particionamento da tabela, comando [`OPTIMIZE`](https://learn.microsoft.co
 
 ### _Exemplo de Data Visualization_
 
-Como sugestão de painel para identificação rápida de eventos e usuários com riscos de fraudes, foi construido um relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`*  está disponível no [link](https://github.com/Foiac/MobileFraudDetectSolution/tree/main/Editaveis/PBI). Para conseguir realizar a conexão com o Azure databricks foi necessário configurar o conector no Power BI inserindo o *Access Token* gerado via Workspace do Databricks e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
+Como sugestão de painel para identificação rápida de eventos e usuários com riscos de fraudes, foi construído um relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`*  está disponível no [link](https://github.com/Foiac/MobileFraudDetectSolution/tree/main/Editaveis/PBI). Para conseguir realizar a conexão com o Azure databricks foi necessário configurar o conector no Power BI inserindo o *Access Token* gerado via Workspace do Databricks e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
 
 <p align="center">
   <img src="Editaveis/Imagens/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
@@ -215,7 +215,7 @@ arquivo para importação e replicação disponível no [json](https://github.co
   <em>Figura 10: Dashboard de monitoração da solução</em>
 </p>
 
-O dash fornece algumas informações básicas para detectar possíveis problemas ao realizar ingestão de dados, ou gargalos na pipeline de dados, para realizar *troubleshooting* basta clicar no recurso no lado direito do painel e investigar as métricas e logs do mesmo mais a fundo, para as métricas do spark é importante acessar também as métricas e logs do cluster para entender onde surge a causa raíz de um posível problema.
+O dash fornece algumas informações básicas para detectar possíveis problemas ao realizar ingestão de dados, ou gargalos na pipeline de dados, para realizar *troubleshooting* basta clicar no recurso no lado direito do painel e investigar as métricas e logs do mesmo mais a fundo, para as métricas do spark é importante acessar também as métricas e logs do cluster para entender onde surge a causa raiz de um possível problema.
 
 ## IV. Melhorias e Considerações finais
 
