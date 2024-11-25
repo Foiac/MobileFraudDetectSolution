@@ -152,7 +152,7 @@ Como o objetivo final é fornecer insumos para profissionais de combate a fraude
   <em>Figura 4: Job de transformação de dados para geração de uma camada Silver</em>
 </p>
 
-O job de transformação dos dados para a camada `Silver` foi desenvolvido com foco na execução diária e no incremento incremental da tabela já existente. A transformação é realizada criando partições na tabela Delta com base na data de criação do evento, garantindo eficiência e organização dos dados ao longo do tempo. Para mais detalhes sobre a implementação do job, é possível consultar o notebook [dataJobClean.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/2%20-%20silverBatch/dataJobClean.ipynb). que descreve o fluxo completo e as operações realizadas.
+O job de transformação dos dados para a camada `Silver` foi desenvolvido com foco na execução diária e no incremento da tabela já existente. Para mais detalhes sobre a implementação do job, é possível consultar o notebook [dataJobClean.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/2%20-%20silverBatch/dataJobClean.ipynb). que descreve o fluxo completo e as operações realizadas.
 
 ### _Tabela `Gold`_
 
