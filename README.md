@@ -83,7 +83,7 @@ Para replicar a infraestrutura desta solução, é necessário possuir uma assin
 - Storage Account com namespace hierárquico habilitado, para organização dos dados no formato Data Lake;
 - Databricks Workspace Premium, que oferece suporte avançado a integrações e segurança.
 
-Para simplificar o provisionamento da infraestrutura, disponibilizo o script.sh, que automatiza a criação dos recursos mencionados.
+Para simplificar o provisionamento da infraestrutura, disponibilizo o [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh), que automatiza a criação dos recursos mencionados.
 
 ### _Cluster Databricks e Scope_
 
