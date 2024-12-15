@@ -1,2 +1,2 @@
-MobileFraudDetectSolution\venv\*
-MobileFraudDetectSolution\dev-notebooks\0 - mockData\.env
+MobileFraudDetectSolution/venv/*
+MobileFraudDetectSolution/dev-notebooks/0 - mockData/.env
