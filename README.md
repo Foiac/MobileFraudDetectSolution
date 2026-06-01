@@ -85,9 +85,9 @@ To replicate the infrastructure of this solution, it is necessary to have a subs
 
 To simplify the provisioning of the infrastructure, I provide the [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh), which automates the creation of the mentioned resources.
 
-### _Cluster Databricks e Scope_
+### _Databricks Cluster and Scope_
 
-Como descrito na seção de arquitetura, é necessário a criação de um cluster, a seguir é disponibilizado o json para facilitar o provisionamento, basta substituir [my-storage-account-name] pelo nome do recurso ADLS provisionado, [my-spn-client-id] pelo *client id* da SPN criada no AAD e o [my-tenant-id] pelo *tenant id* da assinatura.
+As described in the architecture section, it is necessary to create a cluster. Below is the JSON provided to facilitate provisioning. Simply replace [my-storage-account-name] with the name of the provisioned ADLS resource, [my-spn-client-id] with the *client id* of the SPN created in AAD, and [my-tenant-id] with the *tenant id* of the subscription.
 
 ``` JSON
 {
@@ -120,110 +120,109 @@ Como descrito na seção de arquitetura, é necessário a criação de um cluste
 }
 ```
 
-Como nas configurações do spark é referenciado uma variável para consumo da secret do Scope do datrabricks, é necessário realizar cerimônia de senha para inserir a secret da *Service Principal* criada no AKV e sincronizar o mesmo com o scope criado no Databricks. O processo de criação e sincronização pode ser consultado na [documentação da Azure](https://learn.microsoft.com/en-us/azure/databricks/security/secrets/).
+As the spark configurations reference a variable to consume the secret from the Databricks Scope, it is necessary to perform a password ceremony to insert the secret of the *Service Principal* created in AKV and synchronize it with the scope created in Databricks. The creation and synchronization process can be consulted in the [Azure documentation](https://learn.microsoft.com/en-us/azure/databricks/security/secrets/).
 
-Para o cluster foi utilizado a versão Databricks Runtime [13.3](https://learn.microsoft.com/pt-br/azure/databricks/release-notes/runtime/13.3lts) que conta com a versão 3.4.1 do Apache Spark sendo uma versão robusta e estável.
+For the cluster, the Databricks Runtime version [13.3](https://learn.microsoft.com/pt-br/azure/databricks/release-notes/runtime/13.3lts) was used, which includes version 3.4.1 of Apache Spark, being a robust and stable version.
 
-### _Ingestão `Bronze`_
+### _`Bronze` Ingestion_
 
-Todo o desenvolvimento deste trabalho se concentra na solução de ingestão e transformação de dados, abordando e utilizando técnicas de Engenharia de Dados, assim, o desenvolvimento da ingestão de dados no Eventhub foi implementado através de um notebook Python que gera e realiza o envio dos dados para o broker de mensageria através do protocolo AMQP, utilizando uma Service Principal com *role* apenas de envio de dados, onde o notebook desenvolvido para esta solução é encontrado em [loginAuthenticationMockData.ipyn](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/0%20-%20mockData/loginAuthenticationMockData.ipynb). O processo de envio dos dados para o tópico do eventhub é possível através da utilização dos pacotes [`azure-identity`](https://learn.microsoft.com/en-us/python/api/overview/azure/identity-readme?view=azure-python) para autorizar o componente através da *SPN* spn-prdcr e [`azure-eventhub`](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-python-get-started-send?tabs=passwordless%2Croles-azure-portal) para realização de comunicação com o recurso, permitindo envio das informações utilizando *batches* de eventos produzidos pelo componente Python.
+The entire development of this work focuses on the data ingestion and transformation solution, addressing and using Data Engineering techniques. Thus, the development of data ingestion into the Event Hub was implemented through a Python notebook that generates and sends the data to the messaging broker through the AMQP protocol, using a Service Principal with a *role* of sending data only, where the notebook developed for this solution is found in [loginAuthenticationMockData.ipyn](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/0%20-%20mockData/loginAuthenticationMockData.ipynb). The process of sending data to the Event Hub topic is possible through the use of the [`azure-identity`](https://learn.microsoft.com/en-us/python/api/overview/azure/identity-readme?view=azure-python) package to authorize the component through the *SPN* spn-prdcr and [`azure-eventhub`](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-python-get-started-send?tabs=passwordless%2Croles-azure-portal) to communicate with the resource, allowing the sending of information using *batches* of events produced by the Python component.
 
-Afim de ler as mensagens do tópico e gravar em uma `Delta Table` no *ADLS*, como apresentado na Figura 3, a solução streaming realiza um fluxo de leitura do Eventhub utilizando o pacote [`azure-event-hubs-spark`](https://github.com/Azure/azure-event-hubs-spark) que simplifica a conexão do Spark com o eventhub, sendo necessário a instalação do pacote no cluster provisionado no Databricks. Uma das desvantagens da utilização desse conector é que não há suporte para processo de autorização das mensagens com AAD através da SPN de forma simples, a documentação apresenta uma forma de realizar a autenticação via AAD com uma adaptação através da criação de uma classe de callback desenvolvida em Scala, para mais detalhes seguir o [link](https://github.com/Azure/azure-event-hubs-spark/blob/master/docs/use-aad-authentication-to-connect-eventhubs.md), mas para simplificar o case e reduzir o desenvolvimento a somente uma linguagem de programação, optou-se pela autorização através de *Connection String* do eventhub armazenado no AKV, sincronizando o segredo com o *Scope* do Databricks.
+In order to read the messages from the topic and write to a `Delta Table` in *ADLS*, as presented in Figure 3, the streaming solution performs a reading flow from the Event Hub using the [`azure-event-hubs-spark`](https://github.com/Azure/azure-event-hubs-spark) package, which simplifies the connection of Spark with the Event Hub, requiring the installation of the package on the cluster provisioned in Databricks. One of the disadvantages of using this connector is that there is no support for the message authorization process with AAD through the SPN in a simple way. The documentation presents a way to perform authentication via AAD with an adaptation through the creation of a callback class developed in Scala. For more details, follow the [link](https://github.com/Azure/azure-event-hubs-spark/blob/master/docs/use-aad-authentication-to-connect-eventhubs.md), but to simplify the case and reduce development to a single programming language, authorization through the Event Hub *Connection String* stored in AKV was chosen, synchronizing the secret with the Databricks *Scope*.
 
 <p align="center">
-  <img src="Editaveis/Imagens/eventhubstreamingingestion.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/eventhubstreamingingestion.png" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 3: Leitura das mensagens do Eventhub e geração de Delta Table no ADLS Gen2</em>
+  <em>Figure 3: Reading the Event Hub messages and generating a Delta Table in ADLS Gen2</em>
 </p>
 
-Para garantir segurança sobre os dados sensíveis foi utilizado uma estratégia de anonimização da informação no momento da ingestão na camada `Bronze`, criou-se um hash com SHA-256 nas informações de IMEI, MAC, CPF e Senha de usuário concatenando estas com uma palavra-chave armazenado no *Scope* do Databricks e resgatada em tempo de execução.
+To ensure security over sensitive data, an information anonymization strategy was used at the time of ingestion into the `Bronze` layer. A SHA-256 hash was created on the IMEI, MAC, CPF, and user Password information, concatenating these with a keyword stored in the Databricks *Scope* and retrieved at runtime.
 
-Por fim, para escrita dos dados, no *Storage Account* configurou-se no Spark Streaming uma janela de processamento de 2 minutos para criação do data frame e por consequência o arquivo parquet em uma Delta Table. É possível ter mais detalhes sobre o job de ingestão olhando o código desenvolido no notebook [dataStreamingLoad.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/1%20-%20eventhubToBronzeStreaming/dataStreamingLoad.ipynb).
+Finally, to write the data, a 2-minute processing window was configured in Spark Streaming in the *Storage Account* to create the data frame and consequently the parquet file in a Delta Table. More details about the ingestion job can be found by looking at the code developed in the [dataStreamingLoad.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/1%20-%20eventhubToBronzeStreaming/dataStreamingLoad.ipynb) notebook.
 
-### _Tabela `Silver`_
+### _`Silver` Table_
 
-O processo de criação da tabela `Silver`, apresentado na Figura 4, envolve a normalização dos dados ingeridos, com o objetivo de corrigir possíveis inconsistências geradas durante a ingestão e, assim, melhorar a qualidade das análises. Durante a transformação dos dados da camada Bronze, também ocorre a conversão de informações técnicas em dados mais funcionais.
+The process of creating the `Silver` table, presented in Figure 4, involves the normalization of the ingested data, with the objective of correcting possible inconsistencies generated during ingestion and thus improving the quality of the analyses. During the transformation of data from the Bronze layer, the conversion of technical information into more functional data also occurs.
 
-Como o objetivo final é fornecer insumos para profissionais de combate a fraudes, que estão mais focados em padrões de comportamento que indicam risco, colunas técnicas, como erro, API e endpoint, são traduzidas em informações mais simples e acessíveis, facilitando a identificação de perfis de risco por equipes com menor especialização técnica.
+As the ultimate goal is to provide inputs for fraud-fighting professionals, who are more focused on behavior patterns that indicate risk, technical columns such as error, API, and endpoint are translated into simpler and more accessible information, facilitating the identification of risk profiles by teams with less technical expertise.
 
 <p align="center">
-  <img src="Editaveis/Imagens/silverjobtransformer.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/silverjobtransformer.png" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 4: Job de transformação de dados para geração de uma camada Silver</em>
+  <em>Figure 4: Data transformation job for generating a Silver layer</em>
 </p>
 
-O job de transformação dos dados para a camada `Silver` foi desenvolvido com foco na execução diária e no incremento da tabela já existente. Para mais detalhes sobre a implementação do job, é possível consultar o notebook [dataJobClean.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/2%20-%20silverBatch/dataJobClean.ipynb). que descreve o fluxo completo e as operações realizadas.
+The data transformation job for the `Silver` layer was developed with a focus on daily execution and incrementing the already existing table. For more details about the job implementation, you can consult the [dataJobClean.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/2%20-%20silverBatch/dataJobClean.ipynb) notebook, which describes the complete flow and the operations performed.
 
-### _Tabela `Gold`_
+### _`Gold` Table_
 
-Para a geração de dados altamente agregados e com informações que facilitam a detecção de fraudes, foi adotado um método de *Feature Engineering* na criação da tabela `Gold`, apresentada na Figura 5. Nessa camada, a solução envolve a criação de uma tabela com colunas específicas para agregação por usuário, incluindo métricas como: quantidade de tentativas de acesso, acessos bem-sucedidos, número de dispositivos utilizados, diversidade de redes acessadas, contagem de senhas empregadas, número de dispositivos habilitados para transações, quantidade distinta de versões de aplicativo usadas, total de localizações distintas e uma coluna de *flag* indicando o risco de fraude. Essas variáveis agregadas permitem análises mais precisas e a identificação de padrões suspeitos que podem indicar atividades fraudulentas.
+To generate highly aggregated data with information that facilitates fraud detection, a *Feature Engineering* method was adopted in the creation of the `Gold` table, presented in Figure 5. In this layer, the solution involves the creation of a table with specific columns for aggregation by user, including metrics such as: number of access attempts, successful accesses, number of devices used, diversity of networks accessed, count of passwords used, number of devices enabled for transactions, distinct number of application versions used, total of distinct locations, and a *flag* column indicating the fraud risk. These aggregated variables allow for more precise analyses and the identification of suspicious patterns that may indicate fraudulent activities.
 
 <p align="center">
-  <img src="Editaveis/Imagens/goldjobtransformer.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/goldjobtransformer.png" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 5: Job de transformação de dados para geração de uma camada Gold com valor para o negócio</em>
+  <em>Figure 5: Data transformation job for generating a Gold layer with business value</em>
 </p>
 
-A geração do indicador de risco foi baseada em regras simples, porém eficazes, que consideram fatores como a quantidade de acessos realizados, dispositivos habilitados para transações, variedade de senhas tentadas e as localizações onde os acessos ocorreram no mesmo dia. Essas regras foram escolhidas estrategicamente por sua capacidade de identificar comportamentos incomuns que podem ser indicativos de risco. A amostra da tabela gerada, ilustrada na Figura 6, demonstra como essas métricas são organizadas para análise.
+The generation of the risk indicator was based on simple but effective rules, which consider factors such as the number of accesses performed, devices enabled for transactions, variety of passwords attempted, and the locations where the accesses occurred on the same day. These rules were strategically chosen for their ability to identify unusual behaviors that may be indicative of risk. The sample of the generated table, illustrated in Figure 6, demonstrates how these metrics are organized for analysis.
 
-Essa abordagem é uma boa estratégia porque combina simplicidade com efetividade. Embora as regras sejam simples, elas são altamente interpretáveis e fáceis de implementar, permitindo uma rápida identificação de padrões anômalos sem a necessidade de modelos complexos. Além disso, a análise de múltiplos fatores (como dispositivos, senhas e localizações) em um único indicador fornece uma visão mais robusta e granular do comportamento do usuário, ajudando a detectar tentativas de fraude com maior precisão. A utilização de métricas quantitativas também facilita a definição de limiares de risco, tornando o processo de detecção mais ágil e transparente.
+This approach is a good strategy because it combines simplicity with effectiveness. Although the rules are simple, they are highly interpretable and easy to implement, allowing for the rapid identification of anomalous patterns without the need for complex models. In addition, the analysis of multiple factors (such as devices, passwords, and locations) in a single indicator provides a more robust and granular view of user behavior, helping to detect fraud attempts with greater precision. The use of quantitative metrics also facilitates the definition of risk thresholds, making the detection process more agile and transparent.
 
 <p align="center">
-  <img src="Editaveis/Imagens/goldtable.png" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/goldtable.png" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 6: Amostra da tabela Gold agregada por usuário com números quantitativos dos acessos do usuário no dia</em>
+  <em>Figure 6: Sample of the Gold table aggregated by user with quantitative figures of the user's accesses during the day</em>
 </p>
 
-Mais detalhes sobre o processo de criação da tabela Gold, é possível verificar no notebook [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/3%20-%20goldBatch/dataJobUserAgg.ipynb).
+More details about the process of creating the Gold table can be found in the [dataJobUserAgg.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/3%20-%20goldBatch/dataJobUserAgg.ipynb) notebook.
 
-### _Particionamento e Otimização_
+### _Partitioning and Optimization_
 
-O particionamento de tabelas no Databricks é uma técnica essencial para melhorar o desempenho de leitura e gestão de grandes volumes de dados. Ao particionar uma tabela, os dados são divididos em subpastas baseadas em uma ou mais colunas, como datas ou localizações, o que permite que apenas as partições relevantes sejam lidas durante as consultas, otimizando a performance. No entanto, de acordo com a [documentação](https://docs.databricks.com/pt/tables/partitions.html) da Databricks é recomendado evitar o particionamento de tabelas menores que 1TB, pois o custo de gerenciamento de muitas partições pequenas pode superar os benefícios de desempenho. Por essa razão, nesta solução, o particionamento não foi utilizado, pois o tamanho das partições depende diretamente do TPS (Transações Por Segundo) da solução de login do aplicativo, que pode não justificar o particionamento com o tamanho atual dos dados.
+Table partitioning in Databricks is an essential technique for improving read performance and managing large volumes of data. By partitioning a table, the data is divided into subfolders based on one or more columns, such as dates or locations, which allows only the relevant partitions to be read during queries, optimizing performance. However, according to the Databricks [documentation](https://docs.databricks.com/pt/tables/partitions.html), it is recommended to avoid partitioning tables smaller than 1TB, as the cost of managing many small partitions can outweigh the performance benefits. For this reason, in this solution, partitioning was not used, as the size of the partitions depends directly on the TPS (Transactions Per Second) of the application's login solution, which may not justify partitioning with the current size of the data.
 
-Sem o particionamento da tabela, comando [`OPTIMIZE`](https://learn.microsoft.com/pt-br/azure/databricks/sql/language-manual/delta-optimize) no Databricks é utilizado para melhorar o desempenho de leitura de uma tabela Delta, realizando a compactação de arquivos pequenos em partições maiores. Isso é especialmente útil quando você tem uma tabela com muitas partições ou arquivos pequenos, o que pode gerar overhead durante a leitura dos dados. O `OPTIMIZE` reorganiza fisicamente os dados, reduzindo o número de arquivos e aumentando a eficiência das consultas subsequentes. Para este case, foi desenvolvido dois jobs para otimização dos arquivos parquets gerados em cada tabela, podendo ser verificado nos notebooks [optimizeSilverDeltaTable.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/4%20-%20optimize/optimizeSilverDeltaTable.ipynb) e [optimizeGoldDeltaTable.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/4%20-%20optimize/optimizeGoldDeltaTable.ipynb).
+Without table partitioning, the [`OPTIMIZE`](https://learn.microsoft.com/pt-br/azure/databricks/sql/language-manual/delta-optimize) command in Databricks is used to improve the read performance of a Delta table, performing the compaction of small files into larger partitions. This is especially useful when you have a table with many partitions or small files, which can generate overhead during data reading. `OPTIMIZE` physically reorganizes the data, reducing the number of files and increasing the efficiency of subsequent queries. For this case, two jobs were developed to optimize the parquet files generated in each table, which can be verified in the [optimizeSilverDeltaTable.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/4%20-%20optimize/optimizeSilverDeltaTable.ipynb) and [optimizeGoldDeltaTable.ipynb](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/dev-notebooks/4%20-%20optimize/optimizeGoldDeltaTable.ipynb) notebooks.
 
-### _Exemplo de Data Visualization_
+### _Data Visualization Example_
 
-Como sugestão de painel para identificação rápida de eventos e usuários com riscos de fraudes, foi construído um relatório com *Power BI*, ilustrado na Figura 7, Figura 8 e Figura 9. O arquivo *`PBIX`*  está disponível no [link](https://github.com/Foiac/MobileFraudDetectSolution/tree/main/Editaveis/PBI). Para conseguir realizar a conexão com o Azure databricks foi necessário configurar o conector no Power BI inserindo o *Access Token* gerado via Workspace do Databricks e as informações JDBC do cluster, tutorial disponível [aqui](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks) 
-
-<p align="center">
-  <img src="Editaveis/Imagens/home-dash.jpeg" alt="Arquitetura Técnica" width="1100">
-  <br>
-  <em>Figura 7: Home do painel com informações de apresentação e descrição das métricas</em>
-</p>
+As a suggestion for a dashboard for quick identification of events and users with fraud risks, a report was built with *Power BI*, illustrated in Figure 7, Figure 8, and Figure 9. The *`PBIX`* file is available at the [link](https://github.com/Foiac/MobileFraudDetectSolution/tree/main/Editaveis/PBI). To establish the connection with Azure Databricks, it was necessary to configure the connector in Power BI by inserting the *Access Token* generated via the Databricks Workspace and the cluster's JDBC information. Tutorial available [here](https://docs.databricks.com/pt/partners/bi/power-bi.html#connect-power-bi-desktop-to-databricks)
 
 <p align="center">
-  <img src="Editaveis/Imagens/indicadores-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/home-dash.jpeg" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 8: Tela de indicadores</em>
+  <em>Figure 7: Dashboard home with presentation information and description of the metrics</em>
 </p>
 
 <p align="center">
-  <img src="Editaveis/Imagens/analitico-dash.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/indicadores-dash.jpeg" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 9: Analítico para avaliação de eventos por usuário</em>
+  <em>Figure 8: Indicators screen</em>
 </p>
-
-### _Monitoramento_
-
-Como estratégia de monitoramento da solução, adotou-se a utilização do Azure Monitor com a construção de um painel para monitoramento do processo de ingestão de dados no tópico e processo de leitura e persistência dos dados na camada `Bronze`, ilustrado na Figura 10 e 
-arquivo para importação e replicação disponível no [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Monitoramento/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
 
 <p align="center">
-  <img src="Editaveis/Imagens/monitoramento.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/analitico-dash.jpeg" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 10: Dashboard de monitoração da solução</em>
+  <em>Figure 9: Analytics for evaluating events by user</em>
 </p>
 
-O dash fornece algumas informações básicas para detectar possíveis problemas ao realizar ingestão de dados, ou gargalos na pipeline de dados, para realizar *troubleshooting* basta clicar no recurso no lado direito do painel e investigar as métricas e logs do mesmo mais a fundo, para as métricas do spark é importante acessar também as métricas e logs do cluster para entender onde surge a causa raiz de um possível problema.
+### _Monitoring_
 
-## IV. Melhorias e Considerações finais
+As a monitoring strategy for the solution, the use of Azure Monitor was adopted with the construction of a dashboard for monitoring the data ingestion process into the topic and the process of reading and persisting the data in the `Bronze` layer, illustrated in Figure 10 and the file for import and replication available in the [json](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Editaveis/Monitoramento/Fraud%20Analytics%20Solution%20Azure%20Monitor.json).
 
-A solução proposta representa uma base robusta para detecção de fraudes em aplicativos móveis, demonstrando como arquiteturas Data Lakehouse podem ser aplicadas a problemas complexos. No entanto, existem diversas oportunidades para expandir e otimizar a arquitetura, elevando seu desempenho e ampliando a aplicabilidade em cenários reais de produção.
+<p align="center">
+  <img src="Editaveis/Imagens/monitoramento.jpeg" alt="Technical Architecture" width="1100">
+  <br>
+  <em>Figure 10: Solution monitoring dashboard</em>
+</p>
 
-Uma das melhorias mais relevantes seria ampliar a solução para atender a cenários de transações financeiras mais complexos, como a prevenção à lavagem de dinheiro (AML). Isso envolveria a criação de algoritmos que detectem padrões de transferências atípicas, também sendo possível o cruzamento das informações com bases de dados externas, como listas de sanções ou suspeitos. Essa abordagem permitiria não apenas identificar fraudes, mas também garantir a conformidade com regulamentações financeiras.
+The dashboard provides some basic information to detect possible problems when performing data ingestion, or bottlenecks in the data pipeline. To perform *troubleshooting*, simply click on the resource on the right side of the dashboard and investigate its metrics and logs in more depth. For the spark metrics, it is also important to access the cluster's metrics and logs to understand where the root cause of a possible problem arises.
 
-Outra evolução seria a integração de técnicas de Machine Learning para ampliar o poder analítico da solução. Modelos como Isolation Forest, DBSCAN ou K-Means podem identificar padrões anômalos em dados de login e transações. Pipelines de CI/CD seriam indispensáveis para automatizar o provisionamento e o deployment, aumentando a agilidade na entrega de melhorias e novas funcionalidades.
+## IV. Improvements and Final Considerations
 
-Por fim, para rodar a solução em um ambiente produtivo, é fundamental orquestrar os processos de ingestão, transformação e otimização de dados de forma automatizada, utilizando ferramentas como Databricks Workflows ou Azure Data Factory para garantir consistência e eficiência. Políticas de gerenciamento de clusters no Databricks e jobs de expurgo dos dados também desempenham um papel crucial, ajudando a controlar custos, reforçar a segurança e evitar configurações inadequadas que possam comprometer a operação.
+The proposed solution represents a robust foundation for fraud detection in mobile applications, demonstrating how Data Lakehouse architectures can be applied to complex problems. However, there are several opportunities to expand and optimize the architecture, increasing its performance and broadening its applicability in real production scenarios.
+
+One of the most relevant improvements would be to expand the solution to address more complex financial transaction scenarios, such as anti-money laundering (AML) prevention. This would involve creating algorithms that detect atypical transfer patterns, also enabling the cross-referencing of information with external databases, such as sanctions or suspect lists. This approach would allow not only identifying fraud but also ensuring compliance with financial regulations.
+
+Another evolution would be the integration of Machine Learning techniques to expand the analytical power of the solution. Models such as Isolation Forest, DBSCAN, or K-Means can identify anomalous patterns in login and transaction data. CI/CD pipelines would be indispensable to automate provisioning and deployment, increasing agility in delivering improvements and new features.
+
+Finally, to run the solution in a production environment, it is essential to orchestrate the data ingestion, transformation, and optimization processes in an automated way, using tools such as Databricks Workflows or Azure Data Factory to ensure consistency and efficiency. Cluster management policies in Databricks and data purge jobs also play a crucial role, helping to control costs, reinforce security, and avoid inadequate configurations that could compromise the operation.
 
