@@ -1,89 +1,89 @@
-# Mobile Fraud Detect Solution - Identificando Tentativas de Fraudes em Aplicativos Mobile
+# Mobile Fraud Detect Solution - Identifying Fraud Attempts in Mobile Applications
 
-## I. Resumo e Objetivo do Case
+## I. Case Summary and Objective
 
-Fraudes em logins de aplicativos de transações financeiras têm se tornado cada vez mais sofisticadas, especialmente em dispositivos móveis. Uma das práticas mais comuns é o Account Takeover (ATO), que ocorre quando invasores conseguem acesso não autorizado a uma conta legítima, muitas vezes utilizando técnicas de engenharia social, phishing, ou através da forma mais básica desse tipo de ataque, que envolve ataques de força bruta orientados por bots, que enviam combinações aleatórias de caracteres a formulários de login até encontrar a combinação de credenciais da conta.
+Fraud in financial transaction application logins has become increasingly sophisticated, especially on mobile devices. One of the most common practices is Account Takeover (ATO), which occurs when attackers gain unauthorized access to a legitimate account, often using social engineering techniques, phishing, or through the most basic form of this type of attack, which involves bot-driven brute force attacks that send random combinations of characters to login forms until they find the account's credential combination.
 
-No contexto de um aplicativo de transações financeiras, como o desenvolvido neste case, os invasores podem utilizar informações pessoais (como CPF, IMEI, MAC address ou dados de localização) para simular que estão usando um dispositivo autenticado. Através de login com credenciais roubadas, eles tentam executar transações fraudulentas, transferindo fundos ou acessando informações sensíveis.
+In the context of a financial transaction application, such as the one developed in this case, attackers can use personal information (such as CPF, IMEI, MAC address, or location data) to simulate that they are using an authenticated device. Through login with stolen credentials, they attempt to execute fraudulent transactions, transferring funds or accessing sensitive information.
 
-Os padrões de comportamento são cruciais para detectar account takeover. Entre os sinais de alerta estão:
+Behavior patterns are crucial for detecting account takeover. Among the warning signs are:
 
--	Logins repetidos a partir de múltiplos dispositivos desconhecidos.
--	Alterações frequentes de localizações geográficas.
--	Uso de dispositivos diferentes do habitual para um CPF específico.
--	Discrepâncias entre a versão do sistema operacional ou da aplicação usada nos logins.
--	Várias tentativas de login malsucedidas em curto intervalo de tempo.
+-	Repeated logins from multiple unknown devices.
+-	Frequent changes of geographic locations.
+-	Use of devices different from the usual for a specific CPF.
+-	Discrepancies between the operating system version or the application version used in the logins.
+-	Multiple failed login attempts in a short time interval.
 
-A solução proposta neste case utiliza um fluxo robusto de ingestão de dados em tempo real, onde informações de login e do aparelho são enviados para um data lake na cloud, estas podem alimentar times de prevenção e detecção de fraudes. Com posse desses dados, é possível identificar padrões e comportamentos suspeitos em dados históricos para retiradas de insights que podem expor tentativas de fraude e servir para processos de auditoria de possíveis casos de ATO com sucesso.
+The solution proposed in this case uses a robust real-time data ingestion flow, where login and device information is sent to a cloud data lake, which can feed fraud prevention and detection teams. With this data in hand, it is possible to identify suspicious patterns and behaviors in historical data to extract insights that can expose fraud attempts and serve auditing processes for possible successful ATO cases.
 
-Desta forma, este trabalho tem como objetivo implementar um case prático de coleta de logs de acesso a um aplicativo de transações financeiras, onde a arquitetura contém ingestão e transformação e visualização de dados em um data lake na cloud (Azure Data Lake Gen2).
+Thus, this work aims to implement a practical case of collecting access logs from a financial transaction application, where the architecture contains data ingestion, transformation, and visualization in a cloud data lake (Azure Data Lake Gen2).
 
-## II. Arquitetura de Solução e Arquitetura Técnica
+## II. Solution Architecture and Technical Architecture
 
-Existem diversas estratégias para mitigar e resolver problemas de tentativas de fraude em sistemas Mobile e Web, desde estratégias de conscientização dos usuários a soluções Anti-Bot, onde para escolher e avaliar a estratégia mais assertiva é importante que os setores de riscos e fraudes consigam identificar e entender quais as principais características do perigo eminente. A coleta e avaliação de logs de aplicação, como ilustrado na Figura 1, com soluções de dados-auxilia o profissional de fraudes neste fluxo de escolha de estratégias de proteção e melhoria.
+There are several strategies to mitigate and solve fraud attempt problems in Mobile and Web systems, from user awareness strategies to Anti-Bot solutions. To choose and evaluate the most assertive strategy, it is important that the risk and fraud departments are able to identify and understand the main characteristics of the imminent danger. The collection and evaluation of application logs, as illustrated in Figure 1, with data solutions assists the fraud professional in this flow of choosing protection and improvement strategies.
 
 <p align="center">
-  <img src="Editaveis/Imagens/mobile-fraud-detect-funct.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/mobile-fraud-detect-funct.jpeg" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 1: Arquitetura funcional de ingestão e transformação de dados para tomada de decisão</em>
+  <em>Figure 1: Functional architecture for data ingestion and transformation for decision making</em>
 </p>
 
-A Figura 2 apresenta a arquitetura técnica de ingestão e transformação de dados coletados de um sistema de login de aplicativos móveis, implementada como uma solução de Data Lakehouse na Azure, organizada de acordo com os princípios da arquitetura medalhão.
+Figure 2 presents the technical architecture for ingesting and transforming data collected from a mobile application login system, implemented as a Data Lakehouse solution on Azure, organized according to the principles of the medallion architecture.
 
-    Data Lakehouse e Arquitetura Medalhão
+    Data Lakehouse and Medallion Architecture
   
-O conceito de Data Lakehouse combina a escalabilidade e flexibilidade de um Data Lake com a estrutura e o desempenho de um Data Warehouse, permitindo o armazenamento de grandes volumes de dados em seu formato bruto, enquanto oferece suporte a consultas analíticas otimizadas diretamente sobre os dados.
+The Data Lakehouse concept combines the scalability and flexibility of a Data Lake with the structure and performance of a Data Warehouse, allowing the storage of large volumes of data in their raw format, while supporting optimized analytical queries directly over the data.
 
-A [arquitetura medalhão](https://learn.microsoft.com/pt-br/azure/databricks/lakehouse/medallion) organiza o pipeline em camadas lógicas:
+The [medallion architecture](https://learn.microsoft.com/pt-br/azure/databricks/lakehouse/medallion) organizes the pipeline into logical layers:
 
-- `Bronze`: Armazena os dados brutos no formato original, como logs de acesso e eventos do sistema de login, preservando a integridade dos dados coletados.
-- `Silver`: Contém dados pré-processados e limpos, onde informações redundantes ou inconsistentes são tratadas, permitindo uma análise mais eficiente.
-- `Gold`: Representa a camada mais refinada, com dados transformados e prontos para análise avançada, como a detecção de tentativas de fraude em logins.
+- `Bronze`: Stores raw data in its original format, such as access logs and login system events, preserving the integrity of the collected data.
+- `Silver`: Contains pre-processed and cleaned data, where redundant or inconsistent information is handled, allowing for more efficient analysis.
+- `Gold`: Represents the most refined layer, with transformed data ready for advanced analysis, such as detecting fraud attempts in logins.
 
-Essa abordagem melhora a governança, otimiza o desempenho das consultas e possibilita o uso de ferramentas avançadas de big data, como Apache Spark e Databricks, para atender a requisitos analíticos.
+This approach improves governance, optimizes query performance, and enables the use of advanced big data tools, such as Apache Spark and Databricks, to meet analytical requirements.
 
 <p align="center">
-  <img src="Editaveis/Imagens/mobile-fraud-detect-V1.jpeg" alt="Arquitetura Técnica" width="1100">
+  <img src="Editaveis/Imagens/mobile-fraud-detect-V1.jpeg" alt="Technical Architecture" width="1100">
   <br>
-  <em>Figura 2: Arquitetura para ingestão e transformação de dados em um data lake na Azure</em>
+  <em>Figure 2: Architecture for data ingestion and transformation in a data lake on Azure</em>
 </p>
 
-A arquitetura técnica apresentada consiste nos seguintes componentes:
+The presented technical architecture consists of the following components:
 
-O [Azure Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about) é uma plataforma de processamento de eventos em tempo real e ingestão de dados altamente escalável, ideal para coletar e processar grandes volumes de dados provenientes de dispositivos IoT, logs de aplicativos ou outros sistemas. Ele atua como um event broker que permite a ingestão e retenção de mensagens, disponibilizando-as para consumidores em tempo quase real ou com processamento em lotes.
+[Azure Event Hub](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about) is a highly scalable real-time event processing and data ingestion platform, ideal for collecting and processing large volumes of data from IoT devices, application logs, or other systems. It acts as an event broker that allows the ingestion and retention of messages, making them available to consumers in near real-time or with batch processing.
 
-Para este caso, optou-se pelo uso do Event Hub com o SKU Basic, pois oferece o menor custo entre os planos disponíveis. No entanto, o SKU Basic possui algumas limitações importantes, como a ausência do recurso Capture, que facilita a gravação automática dos eventos em um armazenamento para processamento posterior, e um período de retenção limitado a um dia. Diante disso, para garantir que nenhuma mensagem seja perdida devido ao intervalo curto de retenção, foi adotada uma solução baseada no Spark Streaming. Essa abordagem possibilita a leitura contínua dos eventos do Event Hub e a gravação dos dados diretamente na camada Bronze do data lake, permitindo que o pipeline de ingestão seja confiável e resiliente a perdas.
+For this case, the Event Hub with the Basic SKU was chosen, as it offers the lowest cost among the available plans. However, the Basic SKU has some important limitations, such as the absence of the Capture feature, which facilitates the automatic recording of events to storage for later processing, and a retention period limited to one day. Given this, to ensure that no message is lost due to the short retention interval, a solution based on Spark Streaming was adopted. This approach enables the continuous reading of Event Hub events and the writing of data directly to the Bronze layer of the data lake, allowing the ingestion pipeline to be reliable and resilient to losses.
 
-O [Azure Databricks](https://learn.microsoft.com/en-us/azure/databricks/introduction/) é uma plataforma unificada de análise e ciência de dados baseada em Apache Spark, projetada para simplificar o processamento de dados em larga escala, aprendizado de máquina e engenharia de dados. Ele combina recursos de processamento distribuído com um ambiente colaborativo, permitindo que equipes de dados desenvolvam, testem e escalem pipelines de maneira eficiente.
+[Azure Databricks](https://learn.microsoft.com/en-us/azure/databricks/introduction/) is a unified analytics and data science platform based on Apache Spark, designed to simplify large-scale data processing, machine learning, and data engineering. It combines distributed processing capabilities with a collaborative environment, allowing data teams to develop, test, and scale pipelines efficiently.
 
-Neste projeto, o Databricks é a ferramenta utilizada na camada de processamento, realizando ingestão e transformação de dados, garantindo três pilares fundamentais:
+In this project, Databricks is the tool used in the processing layer, performing data ingestion and transformation, ensuring three fundamental pillars:
 
-- Segurança: A plataforma oferece integração nativa com ferramentas como o Azure Key Vault para gerenciamento seguro de credenciais e suporte a políticas de segurança que protegem dados sensíveis de usuários.
-- Escalabilidade: Projetado para lidar com grandes volumes de dados, ele ajusta automaticamente os recursos computacionais para atender a demandas variáveis, como os picos de uso comuns em aplicativos financeiros ou transacionais.
-- Eficiência: Com recursos como Adaptive Query Execution (AQE), que otimiza os planos de execução dinamicamente; Optimization, que reduz latências; e Z-Order, que organiza dados para acessos mais rápidos, o Databricks ajuda a otimizar custos e melhorar o desempenho de consultas em grande escala.
+- Security: The platform offers native integration with tools such as Azure Key Vault for secure credential management and support for security policies that protect sensitive user data.
+- Scalability: Designed to handle large volumes of data, it automatically adjusts computational resources to meet variable demands, such as the usage peaks common in financial or transactional applications.
+- Efficiency: With features such as Adaptive Query Execution (AQE), which optimizes execution plans dynamically; Optimization, which reduces latencies; and Z-Order, which organizes data for faster access, Databricks helps optimize costs and improve query performance at scale.
 
-Um recurso essencial para segurança no Databricks é o scope de segredos, que permite criar áreas seguras no workspace para armazenar credenciais como chaves, senhas ou tokens. Essa funcionalidade elimina a necessidade de expor informações sensíveis no código, garantindo conformidade com as melhores práticas de segurança. Além disso, a integração com o Azure Key Vault automatiza a sincronização e o gerenciamento desses segredos, oferecendo um nível adicional de proteção.
+An essential feature for security in Databricks is the secret scope, which allows creating secure areas in the workspace to store credentials such as keys, passwords, or tokens. This functionality eliminates the need to expose sensitive information in the code, ensuring compliance with security best practices. In addition, the integration with Azure Key Vault automates the synchronization and management of these secrets, offering an additional level of protection.
 
-Para armazenamento, foi adotado o [Azure Data Lake Storage Gen2 (ADLS Gen2)](https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction), devido à sua alta capacidade e integração nativa com o Hadoop Distributed File System (HDFS), o que facilita a interação com ferramentas de big data, como Apache Spark e Databricks. O ADLS Gen2 também oferece um armazenamento hierárquico, que melhora o desempenho ao acessar grandes volumes de dados organizados em diretórios, sendo especialmente útil em arquiteturas de dados baseadas no modelo medalhão. Além disso, ele suporta criptografia de dados com chaves gerenciadas pelo cliente, reforçando a segurança e atendendo a requisitos de compliance corporativo.
+For storage, [Azure Data Lake Storage Gen2 (ADLS Gen2)](https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction) was adopted, due to its high capacity and native integration with the Hadoop Distributed File System (HDFS), which facilitates interaction with big data tools, such as Apache Spark and Databricks. ADLS Gen2 also offers hierarchical storage, which improves performance when accessing large volumes of data organized in directories, being especially useful in data architectures based on the medallion model. In addition, it supports data encryption with customer-managed keys, reinforcing security and meeting corporate compliance requirements.
 
-Afim de garantir um devido fluxo de autorização entre os componentes da solução, utilizou-se [Service Principals](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser), que são identidades seguras gerenciadas no Azure Active Directory (AAD) e utilizadas para autenticação e autorização em recursos da Azure. Essas identidades permitem que aplicativos, scripts ou automações acessem serviços do Azure com permissões específicas, sem a necessidade de usar credenciais de usuário.
+In order to ensure a proper authorization flow between the solution components, [Service Principals](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser) were used, which are secure identities managed in Azure Active Directory (AAD) and used for authentication and authorization in Azure resources. These identities allow applications, scripts, or automations to access Azure services with specific permissions, without the need to use user credentials.
 
-Sua importância está em permitir um gerenciamento centralizado de permissões, aumentando a segurança ao evitar o uso de credenciais sensíveis diretamente no código, além de possibilitar a implementação de políticas de acesso granular entre os serviços, como o Databricks, Event Hub e o ADLS Gen2. Isso garante que cada componente tenha apenas os privilégios necessários para sua operação, reduzindo riscos e atendendo a boas práticas de segurança.
+Their importance lies in enabling centralized permission management, increasing security by avoiding the use of sensitive credentials directly in the code, in addition to enabling the implementation of granular access policies between services, such as Databricks, Event Hub, and ADLS Gen2. This ensures that each component has only the privileges necessary for its operation, reducing risks and meeting security best practices.
 
-Por fim, como estratégia de monitoramento foi utilizado o [Azure Monitor](https://learn.microsoft.com/pt-br/azure/azure-monitor/overview) por simplicidade, por ser uma ferramenta nativa da Azure, não sendo necessário realizar grandes configurações para coletar métricas de funcionamento da solução.
+Finally, as a monitoring strategy, [Azure Monitor](https://learn.microsoft.com/pt-br/azure/azure-monitor/overview) was used for simplicity, as it is a native Azure tool, requiring no major configurations to collect metrics on the solution's operation.
 
-## III. Explicação sobre o case desenvolvido
+## III. Explanation of the Developed Case
 
-Como explicado anteriormente, a utilização de uma solução streaming é essencial para evitar a perda de mensagens por expiração no Event Hub. Já as camadas Silver e Gold são processadas em fluxos batch, com jobs configurados para execução diária, garantindo o balanceamento entre processamento em tempo real e análises mais refinadas.
+As explained earlier, the use of a streaming solution is essential to avoid the loss of messages due to expiration in the Event Hub. The Silver and Gold layers, on the other hand, are processed in batch flows, with jobs configured for daily execution, ensuring the balance between real-time processing and more refined analyses.
 
-Para replicar a infraestrutura desta solução, é necessário possuir uma assinatura no provedor de cloud Azure, além de criar um grupo de recursos e provisionar os seguintes serviços:
+To replicate the infrastructure of this solution, it is necessary to have a subscription with the Azure cloud provider, in addition to creating a resource group and provisioning the following services:
 
-- Event Hub Namespace (SKU Básico) para ingestão de eventos;
-- Azure Key Vault (SKU Padrão) para armazenamento seguro de segredos;
-- Storage Account com namespace hierárquico habilitado, para organização dos dados no formato Data Lake;
-- Databricks Workspace Premium, que oferece suporte avançado a integrações e segurança.
+- Event Hub Namespace (Basic SKU) for event ingestion;
+- Azure Key Vault (Standard SKU) for secure storage of secrets;
+- Storage Account with hierarchical namespace enabled, for organizing data in the Data Lake format;
+- Databricks Workspace Premium, which offers advanced support for integrations and security.
 
-Para simplificar o provisionamento da infraestrutura, disponibilizo o [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh), que automatiza a criação dos recursos mencionados.
+To simplify the provisioning of the infrastructure, I provide the [script.sh](https://github.com/Foiac/MobileFraudDetectSolution/blob/main/Infraestrutura/script.sh), which automates the creation of the mentioned resources.
 
 ### _Cluster Databricks e Scope_
 
